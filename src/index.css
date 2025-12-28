@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fix Chrome autofill background */
+.peer:-webkit-autofill,
+.peer:-webkit-autofill:hover,
+.peer:-webkit-autofill:focus,
+.peer:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px white inset;
+  box-shadow: 0 0 0 1000px white inset;
+  -webkit-text-fill-color: #000;
+}
