@@ -88,6 +88,30 @@ useEffect(() => {
       }
     }, [showLogin, showSignup]);
 
+    const AuthTrigger = ({ isMobile = false, onClick }) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`flex items-center justify-center gap-2 ${
+        isMobile
+          ? "w-full py-2 bg-blue-600 text-white rounded-md"
+          : "px-2 py-2 text-xs bg-blue-600 text-white rounded-full font-bold"
+      }`}
+    >
+      {user ? (
+        <>
+          <FaRegCircleUser className="text-lg" />
+          <span>{user.name}</span>
+          <RiArrowDropDownLine />
+        </>
+      ) : (
+        "Login or Signup"
+      )}
+    </button>
+  );
+};
+
+
     return (
      <>
     <nav className="w-full bg-white shadow-sm sticky top-0 z-50">
@@ -172,15 +196,9 @@ useEffect(() => {
               <FaCircleHalfStroke className="cursor-pointer text-lg" />
             </div>
             <div className="mt-2 hidden md:block">
-              <HoverDropdown
-                trigger={
-                  <button className="px-2 py-2 text-xs bg-blue-600 text-white rounded-full font-bold text-center">
-                    Login or signup
-                  </button>
-                }
-              >
+            
 
-                        {/* <HoverDropdown
+            <HoverDropdown
             trigger={
               !user ? (
                 <button className="px-2 py-2 text-xs bg-blue-600 text-white rounded-full font-bold">
@@ -194,13 +212,19 @@ useEffect(() => {
                 </div>
               )
             }
-          > */}
+          >
 
                 <div className="w-64">
                   <DropdownContent
+                    user={user}
                     onLogin={() => setShowLogin(true)}
                     onSignup={() => setShowSignup(true)}
+                    onLogout={() => {
+                      localStorage.removeItem("user");
+                      setUser(null);
+                    }}
                   />
+
                 </div>
               </HoverDropdown>
             </div>
@@ -235,12 +259,39 @@ useEffect(() => {
             </div>
 
             {/* LOGIN — MOBILE (CLICK) */}
-            <button
+            {/* <button
               className="w-full py-2 bg-blue-600 text-white rounded-md"
               onClick={() => setLoginDropdown(!loginDropdown)}
             >
               Login or Signup
-            </button>
+            </button> */}
+
+            <AuthTrigger
+  isMobile
+  onClick={() => setLoginDropdown(!loginDropdown)}
+/>
+
+{loginDropdown && (
+  <div className="mt-2 bg-white border rounded-md shadow-md overflow-hidden">
+    <DropdownContent
+      user={user}
+      onLogin={() => {
+        setLoginDropdown(false);
+        setShowLogin(true);
+      }}
+      onSignup={() => {
+        setLoginDropdown(false);
+        setShowSignup(true);
+      }}
+      onLogout={() => {
+        localStorage.removeItem("user");
+        setUser(null);
+        setLoginDropdown(false);
+      }}
+    />
+  </div>
+)}
+
 
             {loginDropdown && (
               <div className="mt-2 bg-white border rounded-md shadow-md overflow-hidden">
@@ -307,17 +358,16 @@ useEffect(() => {
       </div>
     </nav>
 
-  {/* {showLogin && (
-  <Login close={() => setShowLogin(false)} />
-  )} */}
-  {showLogin && (
+{showLogin && (
   <Login
     close={() => setShowLogin(false)}
     onLoginSuccess={(userData) => {
-      setUser(userData);   
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
     }}
   />
 )}
+
 
 
   {showSignup && (
@@ -328,39 +378,72 @@ useEffect(() => {
 }
 
 /* LOGIN DROPDOWN CONTENT */
-function DropdownContent({ onLogin, onSignup }) {
+function DropdownContent({  user, onLogin, onSignup, onLogout }) {
   return (
-    <>
-      <div  onClick={onLogin}
-           className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer">
-        <IoPersonSharp className="text-blue-600 text-lg" />
-        <div>
-          <p className="text-sm font-semibold">Customer Login</p>
-          <p className="text-xs text-gray-500">Login & check bookings</p>
+      <>
+    {!user ? (
+      <>
+        {/* LOGIN */}
+        <div
+          onClick={onLogin}
+          className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
+        >
+          <IoPersonSharp className="text-blue-600 text-lg" />
+          <div>
+            <p className="text-sm font-semibold">Customer Login</p>
+            <p className="text-xs text-gray-500">Login & check bookings</p>
+          </div>
         </div>
-      </div>
 
-      <hr />
+        <hr />
 
-      <div  onClick={onSignup}
-            className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer">
-        <MdPersonAddAlt1 className="text-blue-600 text-lg" />
-        <div>
-          <p className="text-sm font-semibold">Sign Up</p>
-          <p className="text-xs text-gray-500">Create your account</p>
+        {/* SIGNUP */}
+        <div
+          onClick={onSignup}
+          className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
+        >
+          <MdPersonAddAlt1 className="text-blue-600 text-lg" />
+          <div>
+            <p className="text-sm font-semibold">Sign Up</p>
+            <p className="text-xs text-gray-500">Create your account</p>
+          </div>
         </div>
-      </div>
-
-      <hr />
-
-      <div className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100">
-        <LuTickets className="text-blue-600 text-lg" />
-        <div>
-          <p className="text-sm font-semibold">My Bookings</p>
-          <p className="text-xs text-gray-500">Manage your bookings</p>
-        </div>
-      </div>
       </>
+    ) : (
+      <>
+        {/* MY PROFILE */}
+        <div className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer">
+          <FaRegCircleUser className="text-blue-600 text-lg" />
+          <div >
+          <p className="text-sm font-semibold">My Profile</p>
+          <p>Manage Your Profile and more</p>
+          </div>
+        </div>
+
+        <hr />
+
+        {/* MY BOOKINGS */}
+        <div className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer">
+          <LuTickets className="text-blue-600 text-lg" />
+          <div>
+            <p className="text-sm font-semibold text-black-600">My Bookings</p>
+            <p>Manage Your bookings here</p>
+          </div>
+        </div>
+
+        <hr />
+
+        {/* LOGOUT */}
+        <div
+          onClick={onLogout}
+          className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer text-blue-600"
+        >
+          <TbLogout className="text-lg" />
+          <p className="text-sm font-semibold text-black-600">Logout</p>
+        </div>
+      </>
+    )}
+  </>
   );
 }
 

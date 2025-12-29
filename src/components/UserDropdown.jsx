@@ -17,6 +17,8 @@ export default function UserDropdown() {
     setOpen(false);
   };
 
+  
+
   return (
     <div className="relative inline-block">
       {/* Trigger */}
