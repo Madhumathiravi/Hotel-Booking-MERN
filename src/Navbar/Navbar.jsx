@@ -1,9 +1,12 @@
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import HoverDropdown from "./components/HoverDropdown";
-import Signup from './forms/Signup.jsx'
-import Login from './forms/Login.jsx'
-import logo from "./assets/logo.svg";
+import HoverDropdown from "../components/HoverDropdown.jsx";
+import DropdownContent from "./DropdownContent.jsx";
+
+import Signup from '../forms/Signup.jsx'
+import Login from '../forms/Login.jsx'
+import logo from "../assets/logo.svg";
 
 import { HiMenu, HiX, HiOutlineHome } from "react-icons/hi";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
@@ -110,6 +113,7 @@ useEffect(() => {
     </button>
   );
 };
+const navigate = useNavigate();
 
 
     return (
@@ -215,8 +219,18 @@ useEffect(() => {
           >
 
                 <div className="w-64">
+                  {/* <DropdownContent
+                    user={user}
+                    onLogin={() => setShowLogin(true)}
+                    onSignup={() => setShowSignup(true)}
+                    onLogout={() => {
+                      localStorage.removeItem("user");
+                      setUser(null);
+                    }}
+                  /> */}
                   <DropdownContent
                     user={user}
+                    navigate={navigate}
                     onLogin={() => setShowLogin(true)}
                     onSignup={() => setShowSignup(true)}
                     onLogout={() => {
@@ -257,56 +271,51 @@ useEffect(() => {
               </NavLink>
              ))}
             </div>
-
-            {/* LOGIN — MOBILE (CLICK) */}
-            {/* <button
-              className="w-full py-2 bg-blue-600 text-white rounded-md"
-              onClick={() => setLoginDropdown(!loginDropdown)}
-            >
-              Login or Signup
-            </button> */}
-
-            <AuthTrigger
-  isMobile
-  onClick={() => setLoginDropdown(!loginDropdown)}
-/>
-
-{loginDropdown && (
-  <div className="mt-2 bg-white border rounded-md shadow-md overflow-hidden">
-    <DropdownContent
-      user={user}
-      onLogin={() => {
-        setLoginDropdown(false);
-        setShowLogin(true);
-      }}
-      onSignup={() => {
-        setLoginDropdown(false);
-        setShowSignup(true);
-      }}
-      onLogout={() => {
-        localStorage.removeItem("user");
-        setUser(null);
-        setLoginDropdown(false);
-      }}
-    />
-  </div>
-)}
-
+        <AuthTrigger
+          isMobile
+          onClick={() => setLoginDropdown(!loginDropdown)}
+        />
 
             {loginDropdown && (
               <div className="mt-2 bg-white border rounded-md shadow-md overflow-hidden">
+                {/* <DropdownContent
+                  user={user}
+                  onLogin={() => {
+                    setLoginDropdown(false);
+                    setShowLogin(true);
+                  }}
+                  onSignup={() => {
+                    setLoginDropdown(false);
+                    setShowSignup(true);
+                  }}
+                  onLogout={() => {
+                    localStorage.removeItem("user");
+                    setUser(null);
+                    setLoginDropdown(false);
+                  }}
+                /> */}
+
                 <DropdownContent
-               onLogin={() => {
-                  setLoginDropdown(false);
-                  setShowLogin(true);
-                }}
-                onSignup={() => {
-                  setLoginDropdown(false);
-                  setShowSignup(true);
-                }}
+                  user={user}
+                  navigate={navigate}
+                  onLogin={() => {
+                    setLoginDropdown(false);
+                    setShowLogin(true);
+                  }}
+                  onSignup={() => {
+                    setLoginDropdown(false);
+                    setShowSignup(true);
+                  }}
+                  onLogout={() => {
+                    localStorage.removeItem("user");
+                    setUser(null);
+                    setLoginDropdown(false);
+                  }}
                 />
+
               </div>
             )}
+
           </div>
         )}
 
@@ -376,75 +385,3 @@ useEffect(() => {
   </>
   );
 }
-
-/* LOGIN DROPDOWN CONTENT */
-function DropdownContent({  user, onLogin, onSignup, onLogout }) {
-  return (
-      <>
-    {!user ? (
-      <>
-        {/* LOGIN */}
-        <div
-          onClick={onLogin}
-          className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
-        >
-          <IoPersonSharp className="text-blue-600 text-lg" />
-          <div>
-            <p className="text-sm font-semibold">Customer Login</p>
-            <p className="text-xs text-gray-500">Login & check bookings</p>
-          </div>
-        </div>
-
-        <hr />
-
-        {/* SIGNUP */}
-        <div
-          onClick={onSignup}
-          className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
-        >
-          <MdPersonAddAlt1 className="text-blue-600 text-lg" />
-          <div>
-            <p className="text-sm font-semibold">Sign Up</p>
-            <p className="text-xs text-gray-500">Create your account</p>
-          </div>
-        </div>
-      </>
-    ) : (
-      <>
-        {/* MY PROFILE */}
-        <div className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer">
-          <FaRegCircleUser className="text-blue-600 text-lg" />
-          <div >
-          <p className="text-sm font-semibold">My Profile</p>
-          <p>Manage Your Profile and more</p>
-          </div>
-        </div>
-
-        <hr />
-
-        {/* MY BOOKINGS */}
-        <div className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer">
-          <LuTickets className="text-blue-600 text-lg" />
-          <div>
-            <p className="text-sm font-semibold text-black-600">My Bookings</p>
-            <p>Manage Your bookings here</p>
-          </div>
-        </div>
-
-        <hr />
-
-        {/* LOGOUT */}
-        <div
-          onClick={onLogout}
-          className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer text-blue-600"
-        >
-          <TbLogout className="text-lg" />
-          <p className="text-sm font-semibold text-black-600">Logout</p>
-        </div>
-      </>
-    )}
-  </>
-  );
-}
-
-
