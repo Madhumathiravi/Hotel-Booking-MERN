@@ -4,7 +4,7 @@ import Exclusive from "./Exclusive";
 export default function Home(){
     return(
       <div>
-         <div className="w-full bg-blue-500 py-10 flex justify-center">
+         <div>
          <SearchBar />
        </div>
 
