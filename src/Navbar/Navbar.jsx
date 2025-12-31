@@ -1,5 +1,4 @@
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import HoverDropdown from "../components/HoverDropdown.jsx";
 import DropdownContent from "./DropdownContent.jsx";
@@ -13,35 +12,25 @@ import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import {
   IoInformationCircleOutline,
   IoMailOpenOutline,
-  IoPersonSharp,
 } from "react-icons/io5";
+
 import {
   RiDiscountPercentLine,
   RiCustomerService2Line,
   RiArrowDropDownLine,
 } from "react-icons/ri";
+
 import { VscCallIncoming } from "react-icons/vsc";
-import { MdPersonAddAlt1 } from "react-icons/md";
 import { FaCircleHalfStroke } from "react-icons/fa6";
-import { LuTickets } from "react-icons/lu";
 import { FaRegCircleUser } from "react-icons/fa6";
-import { TbLogout } from "react-icons/tb";
-
-
 
 export default function Navbar() {
-  const NavlinkStyle = ({ isActive }) =>
-    isActive
-      ? "text-blue-600 font-semibold"
-      : "text-gray-700 hover:text-blue-600";
-  
   const navLinks = [
     {to:"/", label:"Home", Icon:HiOutlineHome},
     {to:"/hotels", label:"Hotels", Icon:HiOutlineBuildingOffice2},
     {to:"/offers", label:"Offers", Icon: RiDiscountPercentLine },
     {to:"/about", label:"About", Icon:IoInformationCircleOutline}
   ]    
-
   const [menubarOpen, setMenubarOpen] = useState(false);
   const [showPanel, setShowPanel] = useState(false);
   const [loginDropdown, setLoginDropdown] = useState(false); // mobile only
@@ -114,10 +103,20 @@ useEffect(() => {
   );
 };
 const navigate = useNavigate();
+ const handleLogout = () => {
+    localStorage.removeItem("user"); // or token
+    setUser(null);
+
+    navigate("/", { replace: true }); // ✅ go to home
+  };
+const location = useLocation();
+       useEffect(() => {
+  setMenubarOpen(false);
+}, [location.pathname]);
 
 
     return (
-     <>
+    <>
     <nav className="w-full bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3">
         {/* TOP BAR */}
@@ -143,7 +142,7 @@ const navigate = useNavigate();
             ))}
       </div>
 
-{/* DESKTOP RIGHT */}
+     {/* DESKTOP RIGHT */}
           <div className="hidden md:flex flex-col items-end ml-auto text-sm relative">
             {/* ROW: Customer Service | Country | Dark Mode */}
             <div className="flex items-center gap-6">
@@ -217,26 +216,14 @@ const navigate = useNavigate();
               )
             }
           >
-
-                <div className="w-64">
-                  {/* <DropdownContent
-                    user={user}
-                    onLogin={() => setShowLogin(true)}
-                    onSignup={() => setShowSignup(true)}
-                    onLogout={() => {
-                      localStorage.removeItem("user");
-                      setUser(null);
-                    }}
-                  /> */}
+         <div className="w-64">
+                
                   <DropdownContent
                     user={user}
                     navigate={navigate}
                     onLogin={() => setShowLogin(true)}
                     onSignup={() => setShowSignup(true)}
-                    onLogout={() => {
-                      localStorage.removeItem("user");
-                      setUser(null);
-                    }}
+                    onLogout={handleLogout}
                   />
 
                 </div>
@@ -278,22 +265,6 @@ const navigate = useNavigate();
 
             {loginDropdown && (
               <div className="mt-2 bg-white border rounded-md shadow-md overflow-hidden">
-                {/* <DropdownContent
-                  user={user}
-                  onLogin={() => {
-                    setLoginDropdown(false);
-                    setShowLogin(true);
-                  }}
-                  onSignup={() => {
-                    setLoginDropdown(false);
-                    setShowSignup(true);
-                  }}
-                  onLogout={() => {
-                    localStorage.removeItem("user");
-                    setUser(null);
-                    setLoginDropdown(false);
-                  }}
-                /> */}
 
                 <DropdownContent
                   user={user}
@@ -376,10 +347,7 @@ const navigate = useNavigate();
     }}
   />
 )}
-
-
-
-  {showSignup && (
+{showSignup && (
     <Signup close={() => setShowSignup(false)} />
   )}
   </>
