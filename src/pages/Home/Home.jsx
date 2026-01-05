@@ -4,7 +4,7 @@ import Exclusive from "./Exclusive";
 export default function Home(){
     return(
       <div>
-         <div>
+         <div >
          <SearchBar />
        </div>
 
