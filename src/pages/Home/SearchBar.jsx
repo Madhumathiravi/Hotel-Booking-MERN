@@ -1,116 +1,218 @@
-import { HiOutlineBuildingOffice2 } from "react-icons/hi2"
+
+import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { LuCalendarRange } from "react-icons/lu";
-import { RiArrowDropDownLine } from "react-icons/ri";
-import {useState} from "react"
-export default function Searchbar(){
+import { IoChevronDownOutline } from "react-icons/io5";
+import { useState } from "react";
+
+export default function Searchbar() {
   const [location, setLocation] = useState("Bangalore");
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
-  const [rooms, setRooms] = useState(1);
-  const [adults, setAdults] = useState(1);
-  const [children, setChildren] = useState(0);
-  const [Guestopen, setGuestopen] = useState(false);
-  const guests = adults + children;
+  const [rooms, setRooms] = useState([{ adults: 1, children: 0 }]);
+  const [guestOpen, setGuestOpen] = useState(false);
 
-  return(
-    <>
-    <div className="bg-gradient-to-r from-[#2f80ed] to-[#56ccf2]  pt-10 pb-20 ">
-      <h1 className="text-2xl font-bold text-white text-right px-10 mb-6">Same hotel, Cheapest price. Guaranteed!</h1>
-      {/* search place */}
-      <div className=" max-w-7xl mx-auto px-2">
-        <div className="bg-white rounded-xl shadow-lg flex relative px-4 py-4">
-           <div className="flex flex-col w-70 ">
-            <div className="flex flex-row items-center gap-2 ">
-              <span><HiOutlineBuildingOffice2 /></span>
-              <p className="text-sm w-70 ">Enter City Name, Location, or Specific hotel</p>
+  const guests = rooms.reduce(
+    (total, room) => total + room.adults + room.children,
+    0
+  );
+
+  return (
+    <div className="font-poppins bg-gradient-to-r from-[#2f80ed] to-[#56ccf2] pt-10 pb-20">
+      
+
+      <div className="max-w-7xl mx-auto px-4">
+         <div className="flex justify-end mb-4 ">
+          <h1 className="text-xl font-bold text-white">
+            Same hotel, Cheapest price. Guaranteed!
+          </h1>
+        </div>
+        <div className="bg-white rounded-md shadow-lg ">
+          <div className="grid grid-cols-12 gap-6 items-center">
+
+
+          {/* Location */}
+          <div className="col-span-4 flex flex-col py-6 pl-2">
+            <div className="flex items-center gap-2">
+              <HiOutlineBuildingOffice2 className="text-2xl text-gray-500" />
+              <p className="text-sm text-gray-500 font-medium">
+                Enter City Name, Location, or Specific hotel
+              </p>
             </div>
-            <div>
-              <input type="text"
-              className="w-full border-0 outline-none focus:outline-none bg-transparent shadow-md p-3"
+            <input
+              type="text"
+              className="w-full outline-none p-3"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              />
+            />
+          </div>
+
+          {/* Check-in */}
+          <div className="col-span-2 flex flex-col py-6">
+            <div className="flex items-center gap-2">
+              <LuCalendarRange className="text-gray-500" />
+              <p className="text-sm text-gray-500 font-medium">Check-In</p>
             </div>
-           </div>
+            <input
+              type="date"
+              className="p-2 border rounded"
+              value={checkInDate}
+              onChange={(e) => setCheckInDate(e.target.value)}
+            />
+          </div>
 
-           <div className="px-10 flex flex-col">
-             <div className="flex flex-row items-center gap-2">
-              <span><LuCalendarRange /></span>
-              <p className="text-sm">Check-In</p>
-             </div>
-             <div>
-              <input type="date" name="check-in" id="check-in" 
-              value={checkInDate} 
-              onChange={(e) => setCheckInDate(e.target.value)} />
-             </div>
-           </div>
+          {/* Check-out */}
+          <div className="col-span-2 flex flex-col py-6">
+            <div className="flex items-center gap-2">
+              <LuCalendarRange className="text-gray-500" />
+              <p className="text-sm text-gray-500 font-medium">Check-Out</p>
+            </div>
+            <input
+              type="date"
+              className="p-2 border rounded"
+              min={checkInDate}
+              value={checkOutDate}
+              onChange={(e) => setCheckOutDate(e.target.value)}
+            />
+          </div>
 
-           <div className="px-10 flex flex-col">
-             <div className="flex flex-row items-center gap-2">
-              <span><LuCalendarRange /></span>
-              <p className="text-sm">Check-Out</p>
-             </div>
-             <div>
-              <input type="date" name="check-out" id="check-out" 
-              value={checkOutDate} 
-              onChange={(e) => setCheckOutDate(e.target.value)} />
-             </div>
-           </div>
+          {/* Rooms & Guests */}
+          <div className="col-span-2 relative flex flex-col py-6">
+            <span className="block text-sm mb-1 text-gray-500 font-medium">Rooms & Guests</span>
 
-           <div>
-            <div>
-              <span>Rooms & Guest</span>
-              <div className="flex flex-row items-center gap-2 cursor-pointer"
-              onClick={() => setGuestopen(!Guestopen)}
-              >
-                <p>{rooms} Room {guests} Guests</p>
-                <span><RiArrowDropDownLine /></span>
-              </div>
-               
-               <div className="relative">
-                {Guestopen && (
-                  <div className="absolute bg-white shadow-md p-4 rounded-lg w-50 z-10">
-                    <h4>Room {rooms}:</h4>
+            <div
+              className="flex items-center gap-2 cursor-pointer"
+              onClick={() => setGuestOpen(!guestOpen)}
+            >
+              <p className="text-sm ">
+                {rooms.length} Room · {guests} Guests
+              </p>
+              <IoChevronDownOutline  className="text-2xl font-light" />
+             
+            </div>
 
-                    <div>
-                      <span>Adults</span>
-                      <span>(Above 12 years)</span>
-                      <div className="flex items-center mb-4">
-                        <button onClick={() => setAdults(adults - 1)}>-</button>
-                        <span className="px-2">{adults}</span>
-                        <button onClick={() => setAdults(adults + 1)}>+</button>
-                      </div>
-                   </div>
+            {guestOpen && (
+              <div className="absolute bg-white shadow-md p-4 rounded-lg w-72 z-10 top-20 ">
 
-                      <div>
-                        <span>Children</span>
-                         <span>(Below 12 years)</span>
+                {rooms.map((room, index) => {
+                  const isLastRoom = index === rooms.length - 1;
+
+                  return (
+                    <div key={index} className="border-b pb-3 mb-3">
+                      <h4 className="font-medium mb-3">
+                        Room {index + 1}
+                      </h4>
+
+                      {/* Adults */}
+                      <div className="flex justify-between items-center mb-2">
+                        <span>Adults</span>
                         <div className="flex items-center">
-                          <button onClick={() => setChildren(children - 1)}>-</button>
-                          <span className="px-2">{children}</span>
-                          <button onClick={() => setChildren(children + 1)}>+</button>
+                          <button
+                            className="px-3 py-1 border rounded"
+                            onClick={() => {
+                              const updated = [...rooms];
+                              if (updated[index].adults > 1)
+                                updated[index].adults--;
+                              setRooms(updated);
+                            }}
+                          >
+                            -
+                          </button>
+                          <span className="px-3">{room.adults}</span>
+                          <button
+                            className="px-3 py-1 border rounded"
+                            onClick={() => {
+                              const updated = [...rooms];
+                              updated[index].adults++;
+                              setRooms(updated);
+                            }}
+                          >
+                            +
+                          </button>
                         </div>
                       </div>
 
-                     <div>
-                      <button onClick={setRooms(rooms + 1)}>Add Room</button>
-                     <button onClick={setRooms(rooms-1)}>Remove Room</button>
-                     </div>
-                     
-                    <button>Done</button>
-                </div>
-                )}
-               </div>
+                      {/* Children */}
+                      <div className="flex justify-between items-center mb-2">
+                        <span>Children</span>
+                        <div className="flex items-center">
+                          <button
+                            className="px-3 py-1 border rounded"
+                            onClick={() => {
+                              const updated = [...rooms];
+                              if (updated[index].children > 0)
+                                updated[index].children--;
+                              setRooms(updated);
+                            }}
+                          >
+                            -
+                          </button>
+                          <span className="px-3">{room.children}</span>
+                          <button
+                            className="px-3 py-1 border rounded"
+                            onClick={() => {
+                              const updated = [...rooms];
+                              updated[index].children++;
+                              setRooms(updated);
+                            }}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
 
-            </div>
-           </div>
+                      {/* Add / Remove only on last room */}
+                      {isLastRoom && (
+                        <div className="flex gap-2 mt-3">
+                          <button
+                            className="px-3 py-1 border border-green-500 text-green-600 rounded"
+                            onClick={() =>
+                              setRooms([
+                                ...rooms,
+                                { adults: 1, children: 0 },
+                              ])
+                            }
+                          >
+                            Add Room
+                          </button>
 
-           <div className="bg-[#ef6614] text-white text-center">
-            SEARCH
-           </div>
+                          {rooms.length > 1 && (
+                            <button
+                              className="px-3 py-1 text-red-500 rounded"
+                              onClick={() =>
+                                setRooms(rooms.slice(0, -1))
+                              }
+                            >
+                              Remove Room
+                            </button>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+
+                <button
+                  className="w-full py-2 rounded text-white bg-[#ef6614]"
+                  onClick={() => setGuestOpen(false)}
+                >
+                  Done
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Search */}
+          <button
+              className="col-span-2 h-full bg-[#ef6614] text-white rounded-r-md 
+                        flex items-center justify-center text-lg font-bold"
+            >
+              SEARCH
+            </button>
+
+
+          </div>
         </div>
       </div>
     </div>
-    </>
-  )
+  );
 }
