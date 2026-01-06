@@ -10,6 +10,22 @@ export default function Searchbar() {
   const [checkOutDate, setCheckOutDate] = useState("");
   const [rooms, setRooms] = useState([{ adults: 1, children: 0 }]);
   const [guestOpen, setGuestOpen] = useState(false);
+  const locations = [
+    "New Delhi",
+    "Pune",
+    "Ahmedabad",
+    "Mumbai",
+    "Bangalore",
+    "Jaipur",
+    "Agra",
+    "Hyderabad",
+  ];
+  const internationalLocations = [
+    "Dubai",
+    "Abu Dhabi",
+    "Singapore",
+    "Bangkok",
+  ];
 
   const guests = rooms.reduce(
     (total, room) => total + room.adults + room.children,
@@ -38,14 +54,35 @@ export default function Searchbar() {
                 Enter City Name, Location, or Specific hotel
               </p>
             </div>
+           
             <input
               type="text"
               className="w-full outline-none p-3"
-              value={location}
+              
+
               onChange={(e) => setLocation(e.target.value)}
             />
+             <span className="text-md ">{location}</span>
+            <span>India</span>
           </div>
+          {/* Country */}
+          <div className="relative">
+            <div className="absolute bg-white shadow-md p-4 rounded-lg w-72 z-10">
+              <h4>Popular Search In Domestic</h4>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {locations.map((loc) => (
+                  <span className=" border rounded-md p-1 border-blue-400 text-blue-400 text-xs" key={loc}>{loc}</span>
+                ))}
+              </div>
 
+              <h4>Popular Search In International</h4>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {internationalLocations.map((loc) => (
+                  <span className=" border rounded-md p-1 border-blue-400 text-blue-400 text-xs font-normal" key={loc}>{loc}</span>
+                ))}
+              </div>
+            </div>
+              </div>
           {/* Check-in */}
           <div className="col-span-2 flex flex-col py-6">
             <div className="flex items-center gap-2">
@@ -203,7 +240,8 @@ export default function Searchbar() {
 
           {/* Search */}
           <button
-              className="col-span-2 h-full bg-[#ef6614] text-white rounded-r-md 
+              className="col-span-2 h-full bg-[#ef6614] text-white rounded-r-md
+
                         flex items-center justify-center text-lg font-bold"
             >
               SEARCH
