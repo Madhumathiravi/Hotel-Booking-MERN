@@ -67,19 +67,19 @@ const formatDate = (date) => date.getDate();
 
       <div className="max-w-7xl mx-auto px-4">
          <div className="flex justify-end mb-4 ">
-          <h1 className="text-xl font-bold text-white">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
             Same hotel, Cheapest price. Guaranteed!
           </h1>
         </div>
         <div className="bg-white rounded-md shadow-lg ">
-          <div className="grid grid-cols-12 gap-6 items-center">
+          <div className="grid grid-cols-12  sm:grid-cols-2 lg:grid-cols-12 gap-6 items-center">
 
 
           {/* Location */}
-          <div className="col-span-4 flex flex-col py-6 pl-2 ml-4">
+          <div className="col-span-1 sm:col-span-2 lg:col-span-4 flex flex-col py-6 pl-2 ml-4">
             <div className="flex items-center gap-2">
               <HiOutlineBuildingOffice2 className="text-2xl text-gray-500" />
-              <p className="text-sm text-gray-500 font-medium">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-500 font-medium">
                 Enter City Name, Location, or Specific hotel
               </p>
             </div>
@@ -103,7 +103,7 @@ const formatDate = (date) => date.getDate();
               {isEditing && (
              <div className="relative">
             <div className="absolute bg-white shadow-md p-4 rounded-sm w-80 z-10 mt-2">
-              <h4 className="pb-2">Popular Search In Domestic</h4>
+              <h4 className="pb-2 ">Popular Search In Domestic</h4>
               <div className="flex flex-wrap gap-2 mb-4">
                 {locations.map((loc) => (
                   <span className=" border rounded-sm p-1 border-blue-400 text-blue-400 text-xs cursor-pointer" 
@@ -133,10 +133,10 @@ const formatDate = (date) => date.getDate();
           {/* Country */}
         
           {/* Check-in */}
-          <div className="col-span-2 flex flex-col py-6 ">
+          <div className="col-span-1 lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <LuCalendarRange className="text-gray-500" />
-              <p className="text-sm text-gray-500 font-medium">Check-In</p>
+              <p className="text-sm sm:text-base lg:text-lg text-gray-500 font-medium">Check-In</p>
             </div>
          {/* <div className="col-span-2 relative py-6 cursor-pointer"> */}
   <div
@@ -182,10 +182,10 @@ const formatDate = (date) => date.getDate();
 
 
           {/* Check-out */}
-          <div className="col-span-2 flex flex-col py-6">
+          <div className="col-span-1 lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <LuCalendarRange className="text-gray-500" />
-              <p className="text-sm text-gray-500 font-medium">Check-Out</p>
+              <p className="text-sm sm:text-base lg:text-lg text-gray-500 font-medium">Check-Out</p>
             </div>
             <input
               type="date"
@@ -197,8 +197,8 @@ const formatDate = (date) => date.getDate();
           </div>
 
           {/* Rooms & Guests */}
-          <div className="col-span-2 relative flex flex-col py-6">
-            <span className="block text-sm mb-1 text-gray-500 font-medium">Rooms & Guests</span>
+          <div className="col-span-1 lg:col-span-2 relative flex flex-col py-6">
+            <span className="block text-sm sm:text-base lg:text-lg mb-1 text-gray-500 font-medium">Rooms & Guests</span>
 
             <div
               className="flex items-center gap-2 cursor-pointer"
@@ -324,7 +324,7 @@ const formatDate = (date) => date.getDate();
 
           {/* Search */}
           <button
-              className="col-span-2 h-full bg-[#ef6614] text-white rounded-r-md
+              className="col-span-1 sm:col-span-2 lg:col-span-2 h-full bg-[#ef6614] text-white rounded-r-md
 
                         flex items-center justify-center text-lg font-bold"
             >
