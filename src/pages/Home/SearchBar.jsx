@@ -1,4 +1,5 @@
-
+import {DayPicker} from "react-day-picker";
+import "react-day-picker/dist/style.css";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { LuCalendarRange } from "react-icons/lu";
 import { IoChevronDownOutline } from "react-icons/io5";
@@ -6,19 +7,15 @@ import { useState } from "react";
 
 export default function Searchbar() {
   const [location, setLocation] = useState("Bangalore");
+  const [country, setCountry] = useState("India");
+  const [isEditing, setisEditing] = useState(false);
+
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [rooms, setRooms] = useState([{ adults: 1, children: 0 }]);
   const [guestOpen, setGuestOpen] = useState(false);
   const locations = [
-    "New Delhi",
-    "Pune",
-    "Ahmedabad",
-    "Mumbai",
-    "Bangalore",
-    "Jaipur",
-    "Agra",
-    "Hyderabad",
+  "New Delhi","Pune","Ahmedabad","Mumbai","Bangalore","Jaipur","Agra","Hyderabad",
   ];
   const internationalLocations = [
     "Dubai",
@@ -27,11 +24,43 @@ export default function Searchbar() {
     "Bangkok",
   ];
 
+  const countryByCity = {
+  // India
+  "New Delhi": "India",
+  "Pune": "India",
+  "Ahmedabad": "India",
+  "Mumbai": "India",
+  "Bangalore": "India",
+  "Jaipur": "India",
+  "Agra": "India",
+  "Hyderabad": "India",
+
+  // UAE
+  "Dubai": "United Arab Emirates",
+  "Abu Dhabi": "United Arab Emirates",
+
+  // Singapore
+  "Singapore": "Singapore",
+
+  // Thailand
+  "Bangkok": "Thailand",
+};
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+
+const [selectedDate, setSelectedDate] = useState(tomorrow);
+const [calendarOpen, setCalendarOpen] = useState(false);
+
+const formatDay = (date) => date.toLocaleDateString("en-US", {weekday:"long"});
+const formatMonthYear = (date) => date.toLocaleDateString("en-US", {month:"short", year:"numeric"});
+const formatDate = (date) => date.getDate();
+
   const guests = rooms.reduce(
     (total, room) => total + room.adults + room.children,
     0
   );
 
+  const [range, setRange] = useState();
   return (
     <div className="font-poppins bg-gradient-to-r from-[#2f80ed] to-[#56ccf2] pt-10 pb-20">
       
@@ -47,59 +76,114 @@ export default function Searchbar() {
 
 
           {/* Location */}
-          <div className="col-span-4 flex flex-col py-6 pl-2">
+          <div className="col-span-4 flex flex-col py-6 pl-2 ml-4">
             <div className="flex items-center gap-2">
               <HiOutlineBuildingOffice2 className="text-2xl text-gray-500" />
               <p className="text-sm text-gray-500 font-medium">
                 Enter City Name, Location, or Specific hotel
               </p>
             </div>
-           
-            <input
+           {!isEditing && (
+            <div 
+             className="cursor-pointer flex flex-col ml-6 mt-2"
+             onClick={() => setisEditing(true)}>
+            <span className="text-2xl font-bold">{location}</span>
+            <span className="text-sm">{country}</span>
+            </div>
+           )}
+           {isEditing && (
+             <input
               type="text"
-              className="w-full outline-none p-3"
-              
-
-              onChange={(e) => setLocation(e.target.value)}
+              className="w-full bg-white shadow-md outline-none p-3"
+              autoFocus
+              onChange={(e) => {setLocation(e.target.value)}}
             />
-             <span className="text-md ">{location}</span>
-            <span>India</span>
-          </div>
-          {/* Country */}
-          <div className="relative">
-            <div className="absolute bg-white shadow-md p-4 rounded-lg w-72 z-10">
-              <h4>Popular Search In Domestic</h4>
+           )}
+            
+              {isEditing && (
+             <div className="relative">
+            <div className="absolute bg-white shadow-md p-4 rounded-sm w-80 z-10 mt-2">
+              <h4 className="pb-2">Popular Search In Domestic</h4>
               <div className="flex flex-wrap gap-2 mb-4">
                 {locations.map((loc) => (
-                  <span className=" border rounded-md p-1 border-blue-400 text-blue-400 text-xs" key={loc}>{loc}</span>
+                  <span className=" border rounded-sm p-1 border-blue-400 text-blue-400 text-xs cursor-pointer" 
+                      onMouseDown={() => {
+                      setLocation(loc); 
+                      setCountry(countryByCity[loc]); 
+                      setisEditing(false); 
+                    }}>{loc}</span>
                 ))}
               </div>
 
-              <h4>Popular Search In International</h4>
+              <h4 className="pb-2">Popular Search In International</h4>
               <div className="flex flex-wrap gap-2 mb-4">
                 {internationalLocations.map((loc) => (
-                  <span className=" border rounded-md p-1 border-blue-400 text-blue-400 text-xs font-normal" key={loc}>{loc}</span>
+                  <span className=" border rounded-sm p-1 border-blue-400 text-blue-400 text-xs font-normal cursor-pointer" 
+                   onMouseDown={() => {
+                      setLocation(loc); 
+                      setCountry(countryByCity[loc]);    
+                      setisEditing(false); 
+                    }}>{loc}</span>
                 ))}
               </div>
             </div>
-              </div>
+          </div>
+          )}
+          </div>
+          {/* Country */}
+        
           {/* Check-in */}
-          <div className="col-span-2 flex flex-col py-6">
-            <div className="flex items-center gap-2">
+          <div className="col-span-2 flex flex-col py-6 ">
+            <div className="flex items-center gap-2 mb-4">
               <LuCalendarRange className="text-gray-500" />
               <p className="text-sm text-gray-500 font-medium">Check-In</p>
             </div>
-            <input
-              type="date"
-              className="p-2 border rounded"
-              value={checkInDate}
-              onChange={(e) => setCheckInDate(e.target.value)}
-            />
-          </div>
+         {/* <div className="col-span-2 relative py-6 cursor-pointer"> */}
+  <div
+    className="flex flex-col"
+    onClick={() => setCalendarOpen(true)}
+  >
+   <div className="flex flex-row ">
+     <span className="text-2xl font-bold">
+      {formatDate(selectedDate)}
+    </span>
+
+    <span className="text-sm font-normal pl-2 mt-2">
+      {formatMonthYear(selectedDate)}
+    </span>
+   </div>
+
+    <span className="text-sm">
+      {formatDay(selectedDate)}
+    </span>
+  </div>
+
+  {calendarOpen && (
+    <div className="absolute top-full left-0 z-20 mt-4">
+      <DayPicker
+        mode="single"
+        selected={selectedDate}
+        onSelect={(date) => {
+          if (!date) return;
+          setSelectedDate(date);
+          setCalendarOpen(false);
+        }}
+        captionLayout="dropdown"
+        className="rounded-xl bg-white shadow-lg p-4"
+        classNames={{
+          day_selected: "bg-blue-500 text-white",
+          day_today: "border border-blue-500",
+          caption: "flex justify-center gap-2",
+        }}
+      />
+    </div>
+  )}
+</div>
+
 
           {/* Check-out */}
           <div className="col-span-2 flex flex-col py-6">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mb-4">
               <LuCalendarRange className="text-gray-500" />
               <p className="text-sm text-gray-500 font-medium">Check-Out</p>
             </div>
@@ -128,23 +212,23 @@ export default function Searchbar() {
             </div>
 
             {guestOpen && (
-              <div className="absolute bg-white shadow-md p-4 rounded-lg w-72 z-10 top-20 ">
+              <div className="absolute bg-white shadow-md p-2 rounded-lg w-72 z-10 top-20 mt-4">
 
                 {rooms.map((room, index) => {
                   const isLastRoom = index === rooms.length - 1;
 
                   return (
-                    <div key={index} className="border-b pb-3 mb-3">
-                      <h4 className="font-medium mb-3">
+                    <div key={index} className="border-b pb-2 mb-3">
+                      <h4 className="text-sm  font-semibold">
                         Room {index + 1}
                       </h4>
 
                       {/* Adults */}
-                      <div className="flex justify-between items-center mb-2">
-                        <span>Adults</span>
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-sm">Adults</span>
                         <div className="flex items-center">
                           <button
-                            className="px-3 py-1 border rounded"
+                            className="px-2  border rounded bg-slate-100"
                             onClick={() => {
                               const updated = [...rooms];
                               if (updated[index].adults > 1)
@@ -154,9 +238,9 @@ export default function Searchbar() {
                           >
                             -
                           </button>
-                          <span className="px-3">{room.adults}</span>
+                          <span className="px-2  border rounded-0">{room.adults}</span>
                           <button
-                            className="px-3 py-1 border rounded"
+                            className="px-2  border rounded-none bg-slate-100"
                             onClick={() => {
                               const updated = [...rooms];
                               updated[index].adults++;
@@ -169,11 +253,11 @@ export default function Searchbar() {
                       </div>
 
                       {/* Children */}
-                      <div className="flex justify-between items-center mb-2">
-                        <span>Children</span>
+                      <div className="flex justify-between items-center ">
+                        <span className="text-sm">Children</span>
                         <div className="flex items-center">
                           <button
-                            className="px-3 py-1 border rounded"
+                            className="px-2  border rounded bg-slate-100"
                             onClick={() => {
                               const updated = [...rooms];
                               if (updated[index].children > 0)
@@ -183,9 +267,9 @@ export default function Searchbar() {
                           >
                             -
                           </button>
-                          <span className="px-3">{room.children}</span>
+                          <span className="px-2 border">{room.children}</span>
                           <button
-                            className="px-3 py-1 border rounded"
+                            className="px-2  border rounded bg-slate-100"
                             onClick={() => {
                               const updated = [...rooms];
                               updated[index].children++;
@@ -201,7 +285,7 @@ export default function Searchbar() {
                       {isLastRoom && (
                         <div className="flex gap-2 mt-3">
                           <button
-                            className="px-3 py-1 border border-green-500 text-green-600 rounded"
+                            className="px-3 py-1  border border-green-500 text-green-600 rounded rounded-2xl"
                             onClick={() =>
                               setRooms([
                                 ...rooms,
@@ -214,7 +298,7 @@ export default function Searchbar() {
 
                           {rooms.length > 1 && (
                             <button
-                              className="px-3 py-1 text-red-500 rounded"
+                              className="px-2  text-red-500 rounded border border-red-400"
                               onClick={() =>
                                 setRooms(rooms.slice(0, -1))
                               }
