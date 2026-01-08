@@ -3,7 +3,7 @@ import "react-day-picker/dist/style.css";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { LuCalendarRange } from "react-icons/lu";
 import { IoChevronDownOutline } from "react-icons/io5";
-import { useState } from "react";
+import {  useState } from "react";
 
 export default function Searchbar() {
   const [location, setLocation] = useState("Bangalore");
@@ -11,7 +11,6 @@ export default function Searchbar() {
   const [isEditing, setisEditing] = useState(false);
 
   
-  const [checkOutDate, setCheckOutDate] = useState("");
   const [rooms, setRooms] = useState([{ adults: 1, children: 0 }]);
   const [guestOpen, setGuestOpen] = useState(false);
   const locations = [
@@ -48,7 +47,7 @@ export default function Searchbar() {
 const tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
 
-const [selectedDate, setSelectedDate] = useState(tomorrow);
+const [checkInDate, setcheckInDate] = useState(tomorrow);
 const [calendarOpen, setCalendarOpen] = useState(false);
 
 const formatDay = (date) => date.toLocaleDateString("en-US", {weekday:"long"});
@@ -145,16 +144,16 @@ const formatDate = (date) => date.getDate();
                 >
                 <div className="flex flex-row ">
                 <span className="text-2xl font-bold">
-                  {formatDate(selectedDate)}
+                  {formatDate(checkInDate)}
                 </span>
 
                 <span className="text-sm font-normal pl-2 mt-2">
-                  {formatMonthYear(selectedDate)}
+                  {formatMonthYear(checkInDate)}
                 </span>
                 </div>
 
                 <span className="text-sm">
-                  {formatDay(selectedDate)}
+                  {formatDay(checkInDate)}
                 </span>
                 </div>
 
@@ -169,14 +168,14 @@ const formatDate = (date) => date.getDate();
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 z-30 mt-4">
                   <DayPicker
                   mode="single"
-                  selected={selectedDate}
+                  selected={checkInDate}
                   onSelect={(date) => {
                   if (!date) return;
-                  setSelectedDate(date);
+                  setcheckInDate(date);
                   setCalendarOpen(false);
                   }}
                   captionLayout="dropdown"
-                  // prevent selecting any past dates (before today)
+                  // prevent past days
                   disabled={{ before: new Date() }}
                   className="rounded-xl bg-white shadow-lg p-4"
                   classNames={{
@@ -202,7 +201,7 @@ const formatDate = (date) => date.getDate();
                     className="flex flex-col cursor-pointer"
                     onClick={() => setCalendarOpen(true)}
                   >
-                    {(() => {
+                    {/* {(() => {
                      const coDate = checkOutDate
                       ? checkOutDate
                       : new Date(selectedDate.getTime() + 24 * 60 * 60 * 1000);
@@ -223,7 +222,7 @@ const formatDate = (date) => date.getDate();
                           </span>
                         </>
                       );
-                    })()}
+                    })()} */}
                   </div>
                 </div>
 
@@ -369,3 +368,5 @@ const formatDate = (date) => date.getDate();
     </div>
   );
 }
+
+
