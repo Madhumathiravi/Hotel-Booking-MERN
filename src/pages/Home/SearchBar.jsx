@@ -10,7 +10,7 @@ export default function Searchbar() {
   const [country, setCountry] = useState("India");
   const [isEditing, setisEditing] = useState(false);
 
-  const [checkInDate, setCheckInDate] = useState("");
+  
   const [checkOutDate, setCheckOutDate] = useState("");
   const [rooms, setRooms] = useState([{ adults: 1, children: 0 }]);
   const [guestOpen, setGuestOpen] = useState(false);
@@ -60,7 +60,7 @@ const formatDate = (date) => date.getDate();
     0
   );
 
-  const [range, setRange] = useState();
+ 
   return (
     <div className="font-poppins bg-gradient-to-r from-[#2f80ed] to-[#56ccf2] pt-10 pb-20">
       
@@ -72,14 +72,14 @@ const formatDate = (date) => date.getDate();
           </h1>
         </div>
         <div className="bg-white rounded-md shadow-lg ">
-          <div className="grid grid-cols-12  sm:grid-cols-2 lg:grid-cols-12 gap-6 items-center">
+          <div className="grid grid-cols-1  sm:grid-cols-1 lg:grid-cols-12 gap-4 items-start ">
 
 
           {/* Location */}
-          <div className="col-span-1 sm:col-span-2 lg:col-span-4 flex flex-col py-6 pl-2 ml-4">
+          <div className="col-span-1 sm:col-span-2 lg:col-span-4 flex flex-col py-6 pl-2 ml-4 lg:border-r">
             <div className="flex items-center gap-2">
               <HiOutlineBuildingOffice2 className="text-2xl text-gray-500" />
-              <p className="text-sm sm:text-base lg:text-lg text-gray-500 font-medium">
+              <p className="text-sm md:text-base lg:text-sm text-gray-500 font-medium">
                 Enter City Name, Location, or Specific hotel
               </p>
             </div>
@@ -87,7 +87,7 @@ const formatDate = (date) => date.getDate();
             <div 
              className="cursor-pointer flex flex-col ml-6 mt-2"
              onClick={() => setisEditing(true)}>
-            <span className="text-2xl font-bold">{location}</span>
+            <span className="text-lg sm:text-xl lg:text-2xl font-bold">{location}</span>
             <span className="text-sm">{country}</span>
             </div>
            )}
@@ -102,7 +102,7 @@ const formatDate = (date) => date.getDate();
             
               {isEditing && (
              <div className="relative">
-            <div className="absolute bg-white shadow-md p-4 rounded-sm w-80 z-10 mt-2">
+            <div className="absolute bg-white shadow-md p-4 rounded-sm sm:w-80 z-10 mt-2">
               <h4 className="pb-2 ">Popular Search In Domestic</h4>
               <div className="flex flex-wrap gap-2 mb-4">
                 {locations.map((loc) => (
@@ -130,75 +130,106 @@ const formatDate = (date) => date.getDate();
           </div>
           )}
           </div>
-          {/* Country */}
         
-          {/* Check-in */}
-          <div className="col-span-1 lg:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <LuCalendarRange className="text-gray-500" />
-              <p className="text-sm sm:text-base lg:text-lg text-gray-500 font-medium">Check-In</p>
-            </div>
-         {/* <div className="col-span-2 relative py-6 cursor-pointer"> */}
-  <div
-    className="flex flex-col"
-    onClick={() => setCalendarOpen(true)}
-  >
-   <div className="flex flex-row ">
-     <span className="text-2xl font-bold">
-      {formatDate(selectedDate)}
-    </span>
+                
+                {/* Check-in */}
+                <div className="col-span-1 md:col-span-2 lg:col-span-2 relative lg:border-r">
+                <div className="flex items-center gap-2 mb-4">
+                  <LuCalendarRange className="text-gray-500" />
+                  <p className="text-sm md:text-base lg:text-sm text-gray-500 font-medium">Check-In</p>
+                </div>
 
-    <span className="text-sm font-normal pl-2 mt-2">
-      {formatMonthYear(selectedDate)}
-    </span>
-   </div>
+                <div
+                className="flex flex-col"
+                onClick={() => setCalendarOpen(true)}
+                >
+                <div className="flex flex-row ">
+                <span className="text-2xl font-bold">
+                  {formatDate(selectedDate)}
+                </span>
 
-    <span className="text-sm">
-      {formatDay(selectedDate)}
-    </span>
-  </div>
+                <span className="text-sm font-normal pl-2 mt-2">
+                  {formatMonthYear(selectedDate)}
+                </span>
+                </div>
 
-  {calendarOpen && (
-    <div className="absolute top-full left-0 z-20 mt-4">
-      <DayPicker
-        mode="single"
-        selected={selectedDate}
-        onSelect={(date) => {
-          if (!date) return;
-          setSelectedDate(date);
-          setCalendarOpen(false);
-        }}
-        captionLayout="dropdown"
-        className="rounded-xl bg-white shadow-lg p-4"
-        classNames={{
-          day_selected: "bg-blue-500 text-white",
-          day_today: "border border-blue-500",
-          caption: "flex justify-center gap-2",
-        }}
-      />
-    </div>
-  )}
-</div>
+                <span className="text-sm">
+                  {formatDay(selectedDate)}
+                </span>
+                </div>
+
+                {calendarOpen && (
+                <>
+                {/* full-screen overlay to detect outside clicks and close the calendar */}
+                <div
+                  className="fixed inset-0 z-20"
+                  onClick={() => setCalendarOpen(false)}
+                  aria-hidden
+                />
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 z-30 mt-4">
+                  <DayPicker
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={(date) => {
+                  if (!date) return;
+                  setSelectedDate(date);
+                  setCalendarOpen(false);
+                  }}
+                  captionLayout="dropdown"
+                  // prevent selecting any past dates (before today)
+                  disabled={{ before: new Date() }}
+                  className="rounded-xl bg-white shadow-lg p-4"
+                  classNames={{
+                  day_selected: "bg-blue-400 text-white",
+                  day_today: "border border-blue-500",
+                  caption: "flex justify-center gap-2",
+                  }}
+                  />
+                </div>
+                </>
+                )}
+                </div>
 
 
-          {/* Check-out */}
-          <div className="col-span-1 lg:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <LuCalendarRange className="text-gray-500" />
-              <p className="text-sm sm:text-base lg:text-lg text-gray-500 font-medium">Check-Out</p>
-            </div>
-            <input
-              type="date"
-              className="p-2 border rounded"
-              min={checkInDate}
-              value={checkOutDate}
-              onChange={(e) => setCheckOutDate(e.target.value)}
-            />
-          </div>
+                {/* Check-out */}
+                <div className="col-span-1 md:col-span-2 lg:col-span-2 relative lg:border-r">
+                  <div className="flex items-center gap-2 mb-4">
+                    <LuCalendarRange className="text-gray-500" />
+                    <p className="text-sm md:text-base lg:text-sm text-gray-500 font-medium">Check-Out</p>
+                  </div>
 
-          {/* Rooms & Guests */}
+                  <div
+                    className="flex flex-col cursor-pointer"
+                    onClick={() => setCalendarOpen(true)}
+                  >
+                    {(() => {
+                     const coDate = checkOutDate
+                      ? checkOutDate
+                      : new Date(selectedDate.getTime() + 24 * 60 * 60 * 1000);
+                      return (
+                        <>
+                          <div className="flex flex-row ">
+                            <span className="text-2xl font-bold">
+                              {formatDate(coDate)}
+                            </span>
+
+                            <span className="text-sm font-normal pl-2 mt-2">
+                              {formatMonthYear(coDate)}
+                            </span>
+                          </div>
+
+                          <span className="text-sm">
+                            {formatDay(coDate)}
+                          </span>
+                        </>
+                      );
+                    })()}
+                  </div>
+                </div>
+
+            {/* rooms and guests */}
           <div className="col-span-1 lg:col-span-2 relative flex flex-col py-6">
-            <span className="block text-sm sm:text-base lg:text-lg mb-1 text-gray-500 font-medium">Rooms & Guests</span>
+            <span className="block text-sm md:text-base lg:text-sm mb-1 text-gray-500 font-medium">Rooms & Guests</span>
 
             <div
               className="flex items-center gap-2 cursor-pointer"
@@ -212,7 +243,7 @@ const formatDate = (date) => date.getDate();
             </div>
 
             {guestOpen && (
-              <div className="absolute bg-white shadow-md p-2 rounded-lg w-72 z-10 top-20 mt-4">
+              <div className="absolute bg-white shadow-md p-3 rounded-lg w-full sm:w-72 z-10 top-full mt-2">
 
                 {rooms.map((room, index) => {
                   const isLastRoom = index === rooms.length - 1;
