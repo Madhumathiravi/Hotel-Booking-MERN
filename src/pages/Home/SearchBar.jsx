@@ -44,11 +44,24 @@ export default function Searchbar() {
   // Thailand
   "Bangkok": "Thailand",
 };
-const tomorrow = new Date();
-tomorrow.setDate(tomorrow.getDate() + 1);
 
-const [checkInDate, setcheckInDate] = useState(tomorrow);
-const [calendarOpen, setCalendarOpen] = useState(false);
+const today = new Date();
+
+const gettomorrow = () => {
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+  return d;
+};
+
+const getDayAfterTomorrow = () => {
+  const d = new Date();
+  d.setDate(d.getDate() + 2);
+  return d;
+};
+
+const [checkInDate, setcheckInDate] = useState(gettomorrow());
+const [checkOutDate, setCheckOutDate] = useState(getDayAfterTomorrow());
+const [calendarOpen, setCalendarOpen] = useState(null);
 
 const formatDay = (date) => date.toLocaleDateString("en-US", {weekday:"long"});
 const formatMonthYear = (date) => date.toLocaleDateString("en-US", {month:"short", year:"numeric"});
@@ -64,7 +77,7 @@ const formatDate = (date) => date.getDate();
     <div className="font-poppins bg-gradient-to-r from-[#2f80ed] to-[#56ccf2] pt-10 pb-20">
       
 
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="lg:max-w-7xl  mx-auto px-4">
          <div className="flex justify-end mb-4 ">
           <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
             Same hotel, Cheapest price. Guaranteed!
@@ -99,7 +112,7 @@ const formatDate = (date) => date.getDate();
             />
            )}
             
-              {isEditing && (
+              {/* {isEditing && (
              <div className="relative">
             <div className="absolute bg-white shadow-md p-4 rounded-sm sm:w-80 z-10 mt-2">
               <h4 className="pb-2 ">Popular Search In Domestic</h4>
@@ -127,104 +140,180 @@ const formatDate = (date) => date.getDate();
               </div>
             </div>
           </div>
-          )}
+          )} */}
+          {isEditing && (
+  <>
+    {/* Overlay for global click dismissal */}
+    <div
+      className="fixed inset-0 z-20"
+      onClick={() => setisEditing(false)}
+      aria-hidden
+    />
+
+    {/* Dropdown */}
+    <div className="relative z-30">
+      <div className="absolute bg-white shadow-md p-4 rounded-sm sm:w-80 mt-2">
+        <h4 className="pb-2">Popular Search In Domestic</h4>
+
+        <div className="flex flex-wrap gap-2 mb-4">
+          {locations.map((loc) => (
+            <span
+              key={loc}
+              className="border rounded-sm p-1 border-blue-400 text-blue-400 text-xs cursor-pointer"
+              onMouseDown={() => {
+                setLocation(loc);
+                setCountry(countryByCity[loc]);
+                setisEditing(false);
+              }}
+            >
+              {loc}
+            </span>
+          ))}
+        </div>
+
+        <h4 className="pb-2">Popular Search In International</h4>
+
+        <div className="flex flex-wrap gap-2">
+          {internationalLocations.map((loc) => (
+            <span
+              key={loc}
+              className="border rounded-sm p-1 border-blue-400 text-blue-400 text-xs cursor-pointer"
+              onMouseDown={() => {
+                setLocation(loc);
+                setCountry(countryByCity[loc]);
+                setisEditing(false);
+              }}
+            >
+              {loc}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </>
+)}
+
           </div>
         
                 
                 {/* Check-in */}
-                <div className="col-span-1 md:col-span-2 lg:col-span-2 relative lg:border-r">
-                <div className="flex items-center gap-2 mb-4">
-                  <LuCalendarRange className="text-gray-500" />
-                  <p className="text-sm md:text-base lg:text-sm text-gray-500 font-medium">Check-In</p>
-                </div>
+        <div className="col-span-1 md:col-span-2 lg:col-span-2 relative lg:border-r">
+        <div className="flex items-center gap-2 mb-4">
+          <LuCalendarRange className="text-gray-500" />
+          <p className="text-sm md:text-base lg:text-sm text-gray-500 font-medium">Check-In</p>
+        </div>
 
-                <div
-                className="flex flex-col"
-                onClick={() => setCalendarOpen(true)}
-                >
-                <div className="flex flex-row ">
-                <span className="text-2xl font-bold">
-                  {formatDate(checkInDate)}
-                </span>
+        <div
+        className="flex flex-col"
+        onClick={() => setCalendarOpen("checkin")}
+        >
+        <div className="flex flex-row ">
+        <span className="text-2xl font-bold">
+          {formatDate(checkInDate)}
+        </span>
 
-                <span className="text-sm font-normal pl-2 mt-2">
-                  {formatMonthYear(checkInDate)}
-                </span>
-                </div>
+        <span className="text-sm font-normal pl-2 mt-2">
+          {formatMonthYear(checkInDate)}
+        </span>
+        </div>
 
-                <span className="text-sm">
-                  {formatDay(checkInDate)}
-                </span>
-                </div>
+        <span className="text-sm">
+          {formatDay(checkInDate)}
+        </span>
+        </div>
 
-                {calendarOpen && (
-                <>
-                {/* full-screen overlay to detect outside clicks and close the calendar */}
-                <div
-                  className="fixed inset-0 z-20"
-                  onClick={() => setCalendarOpen(false)}
-                  aria-hidden
-                />
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 z-30 mt-4">
-                  <DayPicker
-                  mode="single"
-                  selected={checkInDate}
-                  onSelect={(date) => {
-                  if (!date) return;
-                  setcheckInDate(date);
-                  setCalendarOpen(false);
-                  }}
-                  captionLayout="dropdown"
-                  // prevent past days
-                  disabled={{ before: new Date() }}
-                  className="rounded-xl bg-white shadow-lg p-4"
-                  classNames={{
-                  day_selected: "bg-blue-400 text-white",
-                  day_today: "border border-blue-500",
-                  caption: "flex justify-center gap-2",
-                  }}
-                  />
-                </div>
-                </>
-                )}
-                </div>
+            {calendarOpen === "checkin" && (
+  <>
+    {/* Overlay – catches all outside clicks */}
+    <div
+      className="fixed inset-0 z-20"
+      onClick={() => setCalendarOpen(null)}
+      aria-hidden
+    />
 
+    {/* Calendar */}
+    <div className="absolute top-full left-1/2 -translate-x-1/2 z-30 mt-4">
+      <DayPicker
+        mode="single"
+        selected={checkInDate}
+        onSelect={(date) => {
+          if (!date) return;
+          setcheckInDate(date);
 
-                {/* Check-out */}
-                <div className="col-span-1 md:col-span-2 lg:col-span-2 relative lg:border-r">
-                  <div className="flex items-center gap-2 mb-4">
-                    <LuCalendarRange className="text-gray-500" />
-                    <p className="text-sm md:text-base lg:text-sm text-gray-500 font-medium">Check-Out</p>
-                  </div>
+          if (checkOutDate <= date) {
+            const nextDay = new Date(date);
+            nextDay.setDate(nextDay.getDate() + 1);
+            setCheckOutDate(nextDay);
+          }
 
-                  <div
-                    className="flex flex-col cursor-pointer"
-                    onClick={() => setCalendarOpen(true)}
-                  >
-                    {/* {(() => {
-                     const coDate = checkOutDate
-                      ? checkOutDate
-                      : new Date(selectedDate.getTime() + 24 * 60 * 60 * 1000);
-                      return (
-                        <>
-                          <div className="flex flex-row ">
-                            <span className="text-2xl font-bold">
-                              {formatDate(coDate)}
-                            </span>
+          setCalendarOpen(null);
+        }}
+        disabled={{ before: gettomorrow() }}
+        className="rounded-xl bg-white shadow-lg p-4"
+      />
+    </div>
+  </>
+)}
 
-                            <span className="text-sm font-normal pl-2 mt-2">
-                              {formatMonthYear(coDate)}
-                            </span>
-                          </div>
+  </div>
 
-                          <span className="text-sm">
-                            {formatDay(coDate)}
-                          </span>
-                        </>
-                      );
-                    })()} */}
-                  </div>
-                </div>
+              <div className="col-span-1 md:col-span-2 lg:col-span-2 relative lg:border-r">
+            <div className="flex items-center gap-2 mb-4">
+              <LuCalendarRange className="text-gray-500" />
+              <p className="text-sm md:text-base lg:text-sm text-gray-500 font-medium">Check-Out</p>
+            </div>
+
+            <div
+            className="flex flex-col"
+            onClick={() => setCalendarOpen("checkout")}
+            >
+            <div className="flex flex-row ">
+            <span className="text-2xl font-bold">
+              {formatDate(checkOutDate)}
+            </span>
+
+            <span className="text-sm font-normal pl-2 mt-2">
+              {formatMonthYear(checkOutDate)}
+            </span>
+            </div>
+
+            <span className="text-sm">
+              {formatDay(checkOutDate)}
+            </span>
+            </div>
+
+          {calendarOpen === "checkout" && (
+  <>
+    <div
+      className="fixed inset-0 z-20"
+      onClick={() => setCalendarOpen(null)}
+      aria-hidden
+    />
+
+    <div className="absolute top-full left-1/2 -translate-x-1/2 z-30 mt-4">
+      <DayPicker
+        mode="single"
+        selected={checkOutDate}
+        onSelect={(date) => {
+          if (!date || date <= checkInDate) return;
+          setCheckOutDate(date);
+          setCalendarOpen(null);
+        }}
+        disabled={{
+          before: (() => {
+            const d = new Date(checkInDate);
+            d.setDate(d.getDate() + 1);
+            return d;
+          })(),
+        }}
+        className="rounded-xl bg-white shadow-lg p-4"
+      />
+    </div>
+  </>
+)}
+
+            </div>
+
 
             {/* rooms and guests */}
           <div className="col-span-1 lg:col-span-2 relative flex flex-col py-6">
