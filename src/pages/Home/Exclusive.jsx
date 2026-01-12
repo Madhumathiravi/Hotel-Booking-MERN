@@ -1,6 +1,8 @@
 import card1 from "../../assets/exclusive/card1.webp";
 import card2 from "../../assets/exclusive/card2.webp";
 import ExclusiveCard from "./ExclusiveCard";
+import { FaArrowCircleLeft } from "react-icons/fa";
+import { FaArrowCircleRight } from "react-icons/fa";
 
 export default function Exclusive() {
   const cards = [
@@ -60,82 +62,18 @@ export default function Exclusive() {
       image: card2,
       bg: "bg-gradient-to-r from-orange-600 to-orange-300",
     },
-     {
-      id: 2,
-      title: "Introducing",
-      span:"Lowest Price Guarantee",
-      subtitle: "On Hotel",
-      description:
-        "Find better hotel price anywhere else & get double refund",
-      validity: "Book Now",
-      image: card2,
-      bg: "bg-gradient-to-r from-orange-600 to-orange-300",
-    },
-     {
-      id: 2,
-      title: "Introducing",
-      span:"Lowest Price Guarantee",
-      subtitle: "On Hotel",
-      description:
-        "Find better hotel price anywhere else & get double refund",
-      validity: "Book Now",
-      image: card2,
-      bg: "bg-gradient-to-r from-orange-600 to-orange-300",
-    },
-     {
-      id: 2,
-      title: "Introducing",
-      span:"Lowest Price Guarantee",
-      subtitle: "On Hotel",
-      description:
-        "Find better hotel price anywhere else & get double refund",
-      validity: "Book Now",
-      image: card2,
-      bg: "bg-gradient-to-r from-orange-600 to-orange-300",
-    },
-     {
-      id: 2,
-      title: "Introducing",
-      span:"Lowest Price Guarantee",
-      subtitle: "On Hotel",
-      description:
-        "Find better hotel price anywhere else & get double refund",
-      validity: "Book Now",
-      image: card2,
-      bg: "bg-gradient-to-r from-orange-600 to-orange-300",
-    },
-     {
-      id: 2,
-      title: "Introducing",
-      span:"Lowest Price Guarantee",
-      subtitle: "On Hotel",
-      description:
-        "Find better hotel price anywhere else & get double refund",
-      validity: "Book Now",
-      image: card2,
-      bg: "bg-gradient-to-r from-orange-600 to-orange-300",
-    },
-     {
-      id: 2,
-      title: "Introducing",
-      span:"Lowest Price Guarantee",
-      subtitle: "On Hotel",
-      description:
-        "Find better hotel price anywhere else & get double refund",
-      validity: "Book Now",
-      image: card2,
-      bg: "bg-gradient-to-r from-orange-600 to-orange-300",
-    },
   ];
 
   return (
    <div>
     <h1 className=" font-poppins text-3xl font-bold mb-4 text-center">Exclusive Offers</h1>
+    <span><FaArrowCircleLeft className="text-blue-400 text-xl" /></span>
      <div className="flex gap-4 overflow-hidden  px-4">
       {cards.map((card) => (
         <ExclusiveCard key={card.id} card={card} />
       ))}
     </div>
+    <span><FaArrowCircleRight  className="text-blue-400 text-xl"  /></span>
    </div>
   );
 }
