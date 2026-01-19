@@ -1,6 +1,6 @@
 import SearchBar from "./SearchBar";
 import ImageSlider from "./ImageSlider";
-import Exclusive from "./Exclusive";
+import ExclusiveOffers from "./ExclusiveOffers.jsx";
 export default function Home(){
     return(
       <div>
@@ -13,7 +13,7 @@ export default function Home(){
        </div>
 
        <div>
-        <Exclusive/>
+        <ExclusiveOffers/>
        </div>
       </div>
 

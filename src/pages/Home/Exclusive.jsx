@@ -66,7 +66,7 @@ export default function Exclusive() {
 
   return (
    <div>
-    <h1 className=" font-poppins text-3xl font-bold mb-4 text-center">Exclusive Offers</h1>
+    <h1 >Exclusive Offers</h1>
     <span><FaArrowCircleLeft className="text-blue-400 text-xl" /></span>
      <div className="flex gap-4 overflow-hidden  px-4">
       {cards.map((card) => (
