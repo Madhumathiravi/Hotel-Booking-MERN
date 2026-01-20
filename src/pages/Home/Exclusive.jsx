@@ -1,15 +1,172 @@
+
+// import { useRef } from "react";
+// import card1 from "../../assets/exclusive/card1.webp";
+// import card2 from "../../assets/exclusive/card2.webp";
+// import card3 from "../../assets/exclusive/card3.webp";
+// import card4 from "../../assets/exclusive/card4.webp";
+// import card5 from "../../assets/exclusive/card5.webp";
+// import card6 from "../../assets/exclusive/card6.webp";
+// import card7 from "../../assets/exclusive/card7.webp";
+// import ExclusiveCard from "./ExclusiveCard";
+// import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
+
+// export default function Exclusive() {
+//   const sliderRef = useRef(null);
+
+//   const scroll = (direction) => {
+//     if (!sliderRef.current) return;
+
+//     const scrollAmount = 360; // card width + gap
+//     sliderRef.current.scrollBy({
+//       left: direction === "left" ? -scrollAmount : scrollAmount,
+//       behavior: "smooth",
+//     });
+//   };
+
+//   const cards = [
+//     {
+//       id: 1,
+//       title: "Get Up to",
+//       span: "40% OFF",
+//       subtitle: "on Treehouse Hotels",
+//       description: "Enjoy special discount of up to 40% on Treehouse Hotels",
+//       validity: "Valid till: 31st Jan 2026",
+//       image: card1,
+//       bg: "bg-gradient-to-r from-teal-800 to-teal-300",
+//     },
+//     {
+//       id: 2,
+//       title: "Introducing",
+//       span: "Lowest Price Guarantee",
+//       subtitle: "On Hotel",
+//       description:
+//         "Find better hotel price anywhere else & get double refund",
+//       validity: "Book Now",
+//       image: card2,
+//       bg: "bg-gradient-to-r from-orange-600 to-orange-300",
+//     },
+    
+//      {
+//       id: 3,
+//       title: "No Joining Fee on",
+//       span: "Hotel Booking",
+//       subtitle: "On Hotel",
+//       codespan: "Use Code:",
+//       code: "EMTSCB",
+//       description:
+//         "No Joining fee & Get Annual Benefits worth INR 3200* with your Credit Card",
+//       image: card3,
+//       bg: "bg-gradient-to-r from-teal-800 to-teal-300",
+//     },
+//     {
+//       id: 4,
+//       title: "Save Huge",
+//       span: "Using DigiBank",
+//       subtitle: "On Hotel",
+//       codespan: "Use Code:",
+//       code: "DBSEMT",
+//       description:
+//         "Apply for digibank saving account and save huge on travel",
+//       validity: "Book Now",
+//       image: card3,
+//       bg: "bg-gradient-to-r from-blue-600 to-blue-300",
+//     },
+//     {
+//       id: 5,
+//       title: "Based Deal on",
+//       span: "Using DigiBank",
+      
+//       codespan: "Use Code:",
+//       code: "Go Green",
+//       description:
+//         "Best Deal on Eco-Friendly Hotels & Resorts booking using digibank EMT Green Debit Card",
+//       validity: "31st jan 2026",
+//       image: card5,
+//       bg: "bg-gradient-to-r from-teal-600 to-teal-300",
+//     }, {
+//       id: 6,
+//       title: "Hotel Offer",
+//       span: "Upto 20%",
+//       codespan: "Use Code:",
+//       code: "GRAB20",
+//       description:
+//         "Get Upto 20% Discount on Selected Hotels Booking",
+//       validity: "31st Jan 2026",
+//       image: card6,
+//       bg: "bg-gradient-to-r from-orange-600 to-orange-300",
+//     },
+//      {
+//       id: 7,
+//       title: "New User Offer on",
+//       span: "Hotel Booking",
+//       codespan: "Use Code:",
+//       code: "EMTEIRST",
+//       description:
+//         "Register & Enjoy Great Discount on First Hotel Booking",
+//       validity: "31st Jan 2026",
+//       image: card7,
+//       bg: "bg-gradient-to-r from-blue-600 to-blue-300",
+//     }
+//   ];
+
+//   return (
+//     <div className="relative max-w-[1200px] mx-auto">
+//       {/* Header */}
+//       <h1 className="font-poppins text-3xl font-bold mb-6 text-center">
+//         Exclusive Offers
+//       </h1>
+
+//       {/* Left Arrow */}
+//       <button
+//         onClick={() => scroll("left")}
+//         className=" text-blue-300 absolute -left-2 top-1/2 -translate-y-1/2 z-10"
+//       >
+//         <FaArrowCircleLeft className=" text-3xl" />
+//       </button>
+
+//       {/* Right Arrow */}
+//       <button
+//         onClick={() => scroll("right")}
+//         className="text-blue-300 absolute -right-2 top-1/2 -translate-y-1/2 z-10"
+//       >
+//         <FaArrowCircleRight className=" text-3xl" />
+//       </button>
+
+//       {/* Slider */}
+//       <div
+//         ref={sliderRef}
+//         className="flex gap-4 overflow-x-auto scrollbar-hide px-4"
+//       >
+//         {cards.map((card) => (
+//           <ExclusiveCard key={card.id} card={card} />
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+import { useRef, useEffect, useState } from "react";
 import card1 from "../../assets/exclusive/card1.webp";
 import card2 from "../../assets/exclusive/card2.webp";
+import card3 from "../../assets/exclusive/card3.webp";
+import card4 from "../../assets/exclusive/card4.webp";
+import card5 from "../../assets/exclusive/card5.webp";
+import card6 from "../../assets/exclusive/card6.webp";
+import card7 from "../../assets/exclusive/card7.webp";
 import ExclusiveCard from "./ExclusiveCard";
-import { FaArrowCircleLeft } from "react-icons/fa";
-import { FaArrowCircleRight } from "react-icons/fa";
+import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 
 export default function Exclusive() {
+  const sliderRef = useRef(null);
+
+  const CARD_WIDTH = 360;
+  const CLONE_COUNT = 2;
+
   const cards = [
     {
       id: 1,
       title: "Get Up to",
-      span:"40% OFF",
+      span: "40% OFF",
       subtitle: "on Treehouse Hotels",
       description: "Enjoy special discount of up to 40% on Treehouse Hotels",
       validity: "Valid till: 31st Jan 2026",
@@ -19,7 +176,7 @@ export default function Exclusive() {
     {
       id: 2,
       title: "Introducing",
-      span:"Lowest Price Guarantee",
+      span: "Lowest Price Guarantee",
       subtitle: "On Hotel",
       description:
         "Find better hotel price anywhere else & get double refund",
@@ -27,53 +184,166 @@ export default function Exclusive() {
       image: card2,
       bg: "bg-gradient-to-r from-orange-600 to-orange-300",
     },
-     {
+    {
       id: 3,
-      title: "Save Huge",
-      span:"Using DigiBank",
+      title: "No Joining Fee on",
+      span: "Hotel Booking",
       subtitle: "On Hotel",
-      codespan:"use Code:",
-      code:"DBSEMT",
+      codespan: "Use Code:",
+      code: "EMTSCB",
+      description:
+        "No Joining fee & Get Annual Benefits worth INR 3200* with your Credit Card",
+      image: card3,
+      bg: "bg-gradient-to-r from-teal-800 to-teal-300",
+    },
+    {
+      id: 4,
+      title: "Save Huge",
+      span: "Using DigiBank",
+      subtitle: "On Hotel",
+      codespan: "Use Code:",
+      code: "DBSEMT",
       description:
         "Apply for digibank saving account and save huge on travel",
       validity: "Book Now",
-      image: card2,
-      bg: "bg-gradient-to-r from-fuchsia-600 to-fuchsia-300",
+      image: card4,
+      bg: "bg-gradient-to-r from-blue-600 to-blue-300",
     },
-     {
-      id: 2,
-      title: "Introducing",
-      span:"Lowest Price Guarantee",
-      subtitle: "On Hotel",
+    {
+      id: 5,
+      title: "Based Deal on",
+      span: "Using DigiBank",
+      codespan: "Use Code:",
+      code: "Go Green",
       description:
-        "Find better hotel price anywhere else & get double refund",
-      validity: "Book Now",
-      image: card2,
+        "Best Deal on Eco-Friendly Hotels & Resorts booking using digibank EMT Green Debit Card",
+      validity: "31st Jan 2026",
+      image: card5,
+      bg: "bg-gradient-to-r from-teal-600 to-teal-300",
+    },
+    {
+      id: 6,
+      title: "Hotel Offer",
+      span: "Upto 20%",
+      codespan: "Use Code:",
+      code: "GRAB20",
+      description:
+        "Get Upto 20% Discount on Selected Hotels Booking",
+      validity: "31st Jan 2026",
+      image: card6,
       bg: "bg-gradient-to-r from-orange-600 to-orange-300",
     },
-     {
-      id: 2,
-      title: "Introducing",
-      span:"Lowest Price Guarantee",
-      subtitle: "On Hotel",
+    {
+      id: 7,
+      title: "New User Offer on",
+      span: "Hotel Booking",
+      codespan: "Use Code:",
+      code: "EMTEIRST",
       description:
-        "Find better hotel price anywhere else & get double refund",
-      validity: "Book Now",
-      image: card2,
-      bg: "bg-gradient-to-r from-orange-600 to-orange-300",
+        "Register & Enjoy Great Discount on First Hotel Booking",
+      validity: "31st Jan 2026",
+      image: card7,
+      bg: "bg-gradient-to-r from-blue-600 to-blue-300",
     },
   ];
 
+  // 👇 CLONE CARDS FOR INFINITE LOOP
+  const infiniteCards = [
+    ...cards.slice(-CLONE_COUNT),
+    ...cards,
+    ...cards.slice(0, CLONE_COUNT),
+  ];
+
+  // 👇 START IN MIDDLE (REAL CONTENT)
+  useEffect(() => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollLeft = CARD_WIDTH * CLONE_COUNT;
+    }
+  }, []);
+
+  const handleInfiniteScroll = () => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+
+    const maxScroll =
+      CARD_WIDTH * (cards.length + CLONE_COUNT);
+
+    if (slider.scrollLeft <= 0) {
+      slider.scrollLeft = CARD_WIDTH * cards.length;
+    }
+
+    if (slider.scrollLeft >= maxScroll) {
+      slider.scrollLeft = CARD_WIDTH * CLONE_COUNT;
+    }
+
+    const currentIndex = Math.round(
+  slider.scrollLeft / CARD_WIDTH
+);
+setActiveIndex(currentIndex);
+
+  };
+
+
+  const scroll = (direction) => {
+  const slider = sliderRef.current;
+  if (!slider) return;
+
+  slider.scrollBy({
+    left: direction === "left" ? CARD_WIDTH : -CARD_WIDTH,
+    behavior: "smooth",
+  });
+
+  setTimeout(handleInfiniteScroll, 300);
+};
+
+  const [activeIndex, setActiveIndex] = useState(CLONE_COUNT);
+
+
   return (
-   <div>
-    <h1 >Exclusive Offers</h1>
-    <span><FaArrowCircleLeft className="text-blue-400 text-xl" /></span>
-     <div className="flex gap-4 overflow-hidden  px-4">
-      {cards.map((card) => (
-        <ExclusiveCard key={card.id} card={card} />
-      ))}
+    <div className="relative max-w-[1200px] mx-auto">
+      <h1 className="font-poppins text-3xl font-bold mb-6 text-center">
+        Exclusive Offers
+      </h1>
+
+      <button
+        onClick={() => scroll("left")}
+        className="absolute -left-2 top-1/2 -translate-y-1/2 z-10 text-blue-300"
+      >
+        <FaArrowCircleLeft className="text-3xl" />
+      </button>
+
+      <button
+        onClick={() => scroll("right")}
+        className="absolute -right-2 top-1/2 -translate-y-1/2 z-10 text-blue-300"
+      >
+        <FaArrowCircleRight className="text-3xl" />
+      </button>
+
+      <div
+        ref={sliderRef}
+        onScroll={handleInfiniteScroll}
+        className="flex gap-4 overflow-x-hidden px-4 scroll-smooth"
+      >
+       {infiniteCards.map((card, index) => {
+  const isCenter =
+    index === activeIndex ||
+    index === activeIndex + 1 ||
+    index === activeIndex - 1;
+
+  return (
+    <div
+      key={index}
+      className={`transition-opacity duration-300 ${
+        isCenter ? "opacity-100" : "opacity-40"
+      }`}
+    >
+      <ExclusiveCard card={card} />
     </div>
-    <span><FaArrowCircleRight  className="text-blue-400 text-xl"  /></span>
-   </div>
+  );
+})}
+
+      </div>
+    </div>
   );
 }
+
