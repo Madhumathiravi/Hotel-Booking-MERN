@@ -1,6 +1,7 @@
 import SearchBar from "./SearchBar";
 import ImageSlider from "./ImageSlider";
 import Exclusive from "./Exclusive.jsx";
+import HotelsChoice from "./HotelsChoice.jsx";
 export default function Home(){
     return(
       <div>
@@ -14,6 +15,9 @@ export default function Home(){
 
        <div>
         <Exclusive/>
+       </div>
+       <div>
+        <HotelsChoice/>
        </div>
       </div>
 

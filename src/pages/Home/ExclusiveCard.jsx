@@ -1,23 +1,22 @@
 
-
 export default function ExclusiveCard({ card }) {
   return (
-    <div className="flex-shrink-0 w-[360px] font-poppins opacity-60 transition-opacity duration-300">
+    <div className="flex-shrink-0 w-[260px] sm:w-[300px] lg:w-[370px] font-poppins duration-300">
       <div className="bg-white rounded-2xl shadow-md overflow-hidden p-2">
-        <div className={`h-[120px] ${card.bg} text-white flex rounded-xl`}>
+        <div className={`h-[160px] ${card.bg} text-white flex rounded-xl`}>
           <div className="w-2/3 p-4 flex flex-col justify-center">
-            <h3 className="text-lg font-semibold">{card.title}</h3>
+            <h3 className="text-md font-normal">{card.title}</h3>
 
             {card.span && (
-              <span className="text-xl font-bold">{card.span}</span>
+              <span className="text-xl font-semibold">{card.span}</span>
             )}
 
-            <p className="text-sm opacity-90">{card.subtitle}</p>
+            <p className="text-sm">{card.subtitle}</p>
 
             {card.code && (
               <div className="border-2 border-dashed rounded-md mt-2 px-2 py-1 mb-2">
                 <span className="text-xs">{card.codespan}</span>
-                <span className="text-sm font-semibold ml-1 ">
+                <span className="text-sm font-semibold ml-1">
                   {card.code}
                 </span>
               </div>
@@ -34,10 +33,10 @@ export default function ExclusiveCard({ card }) {
         </div>
 
         <div className="p-4">
-          <p className="text-sm text-gray-700 font-semibold">
+          <p className="text-xs text-gray-700 font-semibold">
             {card.description}
           </p>
-          <p className="text-xs text-gray-500 mt-2">{card.validity}</p>
+          <p className="text-xs text-gray-500">{card.validity}</p>
         </div>
       </div>
     </div>
