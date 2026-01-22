@@ -101,14 +101,14 @@ export default function Exclusive() {
     },
   ];
 
-  // 👇 CLONE CARDS FOR INFINITE LOOP
+ 
   const infiniteCards = [
     ...cards.slice(-CLONE_COUNT),
     ...cards,
     ...cards.slice(0, CLONE_COUNT),
   ];
 
-  // 👇 START IN MIDDLE (REAL CONTENT)
+  
   useEffect(() => {
     if (sliderRef.current) {
       sliderRef.current.scrollLeft = CARD_WIDTH * CLONE_COUNT;
@@ -156,7 +156,7 @@ const navigate = useNavigate();
 
   return (
     <div className="relative w-full mx-auto font-poppins">
-      <h1 className="font-poppins text-3xl font-bold mb-6 text-center">
+      <h1 className="font-poppins text-4xl font-bold mb-6 text-center">
         Exclusive Offers
       </h1>
 
@@ -205,7 +205,7 @@ bg-gradient-to-l from-white to-transparent z-10" />
 
       </div>
      <div className="text-center mt-4 ">
-       <button className="text-sm border rounded-3xl px-4 py-2 text-white bg-blue-500" 
+       <button className="text-sm border rounded-3xl px-4 py-2 mb-4 text-white bg-blue-500" 
        onClick={() => navigate("/offers")}
        >View All</button>
      </div>
