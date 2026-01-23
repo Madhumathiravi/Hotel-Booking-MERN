@@ -5,6 +5,7 @@ import HotelsChoice from "./HotelsChoice.jsx";
 import EveryMood from "./EveryMood.jsx";
 import Popular from "./Popular.jsx";
 import HotelChain from "./HotelChain.jsx";
+import Mobile from "./Mobile.jsx"
 export default function Home(){
     return(
       <div>
@@ -26,11 +27,17 @@ export default function Home(){
        <div>
         <EveryMood/>
        </div>
+
        <div>
         <Popular/>
        </div>
+       
        <div>
         <HotelChain/>
+       </div>
+
+       <div>
+        <Mobile/>
        </div>
       </div>
 
