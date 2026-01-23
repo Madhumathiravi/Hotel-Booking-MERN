@@ -6,6 +6,8 @@ import EveryMood from "./EveryMood.jsx";
 import Popular from "./Popular.jsx";
 import HotelChain from "./HotelChain.jsx";
 import Mobile from "./Mobile.jsx"
+import Deals from "./Deals.jsx"
+import WhyBook from "./WhyBook.jsx"
 export default function Home(){
     return(
       <div>
@@ -38,6 +40,13 @@ export default function Home(){
 
        <div>
         <Mobile/>
+       </div>
+
+       <div>
+        <Deals/>
+       </div>
+       <div>
+        <WhyBook/>
        </div>
       </div>
 
