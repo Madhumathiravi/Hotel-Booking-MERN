@@ -81,27 +81,87 @@ export default function WhyBook() {
 
        <div>
         <div>
-             <div className="bg-[#f8f9fa] ">
+          
+            {/* <div className="bg-[#f8f9fa] mt-12 p-6 rounded-xl">
+  <div className="flex gap-4 overflow-x-auto">
+    {reviews.map((review, index) => (
+      <div
+        key={index}
+        className="bg-white min-w-[250px] p-4 rounded-lg shadow flex flex-col gap-2"
+      >
+        {/* STARS */}
+        {/* <div className="flex gap-1">
+          {[1, 2, 3, 4, 5].map((_, i) => (
+            <div
+              key={i}
+              className="w-4 h-4 bg-green-500 flex items-center justify-center"
+            >
+              <FaStar className="text-white text-xs" />
+            </div>
+          ))}
+        </div> */}
+
+        {/* CONTENT */}
+        {/* <h5 className="font-semibold text-sm">{review.title}</h5>
+        <p className="text-sm text-gray-600">{review.text}</p> */}
+
+        {/* FOOTER */}
+        {/* <div className="flex justify-between text-xs text-gray-500 mt-auto">
+          <span>{review.name}</span>
+          <span>{review.days}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</div> */} 
+
+       <div className=" mt-12 py-8">
+  <div className="max-w-6xl mx-auto px-4">
+
+    <Swiper
+      modules={[Navigation]}
+      navigation
+      spaceBetween={16}
+      slidesPerView={1}
+      breakpoints={{
+        640: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+        1024: { slidesPerView: 4 },
+      }}
+    >
+      {reviews.map((review, index) => (
+        <SwiperSlide key={index}>
+          <div className="bg-[#f8f9fa] p-5 rounded-xl shadow h-full flex flex-col gap-3">
+
+            {/* STARS */}
             <div className="flex gap-1">
-            {[1,2,3,4,5].map((_, i) => (
-              <div key={i} className="w-4 h-4 bg-green-500 flex items-center justify-center">
-                <FaStar className="text-white text-xs" />
-              </div>
-            ))}<div/>
-             </div>
-            <div className="flex flex-row ">
-                 {reviews.map((review,index) =>(
-                <div key ={index} className="flex flex-col">
-                  <h5>{review.title}</h5>
-                  <p>{review.text}</p>
-                  <div>
-                    <span>{review.name}</span>
-                    <span>{review.days}</span>
-                  </div>
+              {[1, 2, 3, 4, 5].map((_, i) => (
+                <div
+                  key={i}
+                  className="w-4 h-4 bg-green-500 flex items-center justify-center"
+                >
+                  <FaStar className="text-white text-xs" />
                 </div>
-             ))} 
+              ))}
             </div>
+
+            {/* CONTENT */}
+            <h5 className="font-semibold text-sm">{review.title}</h5>
+            <p className="text-sm text-gray-600">{review.text}</p>
+
+            {/* FOOTER */}
+            <div className="flex justify-between text-xs text-gray-500 mt-auto">
+              <span>{review.name}</span>
+              <span>{review.days}</span>
             </div>
+
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+
+  </div>
+</div>
 
             
         </div>
