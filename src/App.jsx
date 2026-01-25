@@ -10,6 +10,7 @@ import Offers from './pages/Offers.jsx'
 import Profile from './account/Profile.jsx'
 import Bookings from './account/Booking.jsx'
 import ProtectedRoute from "./components/ProtectedRoute"
+import Footer from "./footer/Footer.jsx";
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"))
@@ -42,6 +43,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer/>
     </div>
   )
 }

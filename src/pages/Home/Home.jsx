@@ -7,7 +7,8 @@ import Popular from "./Popular.jsx";
 import HotelChain from "./HotelChain.jsx";
 import Mobile from "./Mobile.jsx"
 import Deals from "./Deals.jsx"
-import WhyBook from "./WhyBook.jsx"
+import WhyBook from "./WhyBook.jsx";
+import Faq from "./Faq.jsx";
 export default function Home(){
     return(
       <div>
@@ -47,6 +48,9 @@ export default function Home(){
        </div>
        <div>
         <WhyBook/>
+       </div>
+       <div>
+        <Faq/>
        </div>
       </div>
 
