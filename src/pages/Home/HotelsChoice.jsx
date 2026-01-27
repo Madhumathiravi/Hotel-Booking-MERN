@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { FaArrowCircleLeft, FaArrowCircleRight, FaArrowRight } from "react-icons/fa";
 import spree from "../../assets/hotelschoice/spree.jpg";
@@ -29,7 +28,7 @@ export default function HotelsChoice() {
   };
 
   return (
-    <div className="font-poppins px-4">
+    <div className="font-poppins px-4 mt-8">
       <h1 className="text-4xl font-bold mb-8 text-center">
         Hotels Of Choice
       </h1>

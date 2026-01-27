@@ -19,7 +19,7 @@ export default function Faq(){
         {questions.map((quest) => (
           <div key={quest.id} className="mt-4">
             <div className="flex items-center justify-between">
-              <span className="text-xl font-medium pb-2">{quest.ques}</span>
+              <span className="text-xl font-medium pb-2" onClick={() => setopenId(openId === quest.id ? null : quest.id)}>{quest.ques}</span>
               <button
                 type="button"
                 aria-expanded={openId === quest.id}
