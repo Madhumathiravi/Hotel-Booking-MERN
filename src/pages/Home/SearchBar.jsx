@@ -74,11 +74,6 @@ export default function Searchbar() {
         </div>
 
         <div className="bg-white rounded-md shadow-lg">
-          {/* responsive grid:
-              - mobile: 1 col (items stack)
-              - small (sm): 4 cols (we use span to make some full-width)
-              - large (lg): 12 cols (original layout)
-          */}
           <div className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-12 gap-4 items-start p-4">
 
             {/* Location */}

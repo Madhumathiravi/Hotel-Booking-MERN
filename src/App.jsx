@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './Navbar/Navbar.jsx'
 
 import Home from './pages/Home/Home.jsx'
-import Hotels from './pages/Hotels.jsx'
+import Hotels from './pages/Hotels/Hotels.jsx'
 import About from './pages/About.jsx'
 import Offers from './pages/Offers.jsx'
 
