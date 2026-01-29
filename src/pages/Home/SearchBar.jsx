@@ -4,6 +4,9 @@ import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { LuCalendarRange } from "react-icons/lu";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { useState } from "react";
+import api from "../../api/axios";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Searchbar() {
   const [location, setLocation] = useState("Bangalore");
@@ -63,6 +66,26 @@ export default function Searchbar() {
     (total, room) => total + room.adults + room.children,
     0
   );
+ const navigate = useNavigate();
+
+const handleSearch = async () => {
+  try {
+    const res = await api.get("/hotels/search", {
+      params: {
+        city: location,
+        checkIn: checkInDate.toISOString(),
+        checkOut: checkOutDate.toISOString(),
+        guests,
+        rooms: rooms.length,
+      },              
+    });
+
+    navigate("/hotels", { state: { hotels: res.data } });
+
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   return (
     <div className="font-poppins bg-gradient-to-r from-[#2f80ed] to-[#56ccf2] pt-10 pb-10">
@@ -401,6 +424,7 @@ export default function Searchbar() {
 
             {/* Search button - full width on small screens, compact on large */}
             <button
+            onClick={handleSearch}
               className="col-span-1 sm:col-span-4 lg:col-span-2 h-full bg-[#ef6614] text-white rounded-md sm:rounded-b-md lg:rounded-r-md flex items-center justify-center text-lg font-bold sm:order-last lg:order-none py-3 "
             >
               SEARCH
@@ -412,6 +436,3 @@ export default function Searchbar() {
     </div>
   );
 }
-
-
-
