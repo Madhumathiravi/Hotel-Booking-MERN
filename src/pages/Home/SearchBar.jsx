@@ -89,15 +89,15 @@ const handleSearch = async () => {
 
   return (
     <div className="font-poppins bg-gradient-to-r from-[#2f80ed] to-[#56ccf2] pt-10 pb-10">
-      <div className="lg:max-w-7xl mx-auto px-4">
+      <div className="lg:max-w-7xl  mx-auto px-4 ">
         <div className="flex justify-end mb-4 ">
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
+          <h1 className="text-lg sm:text-2xl lg:text-xl font-semibold text-white">
             Same hotel, Cheapest price. Guaranteed!
           </h1>
         </div>
 
         <div className="bg-white rounded-md shadow-lg">
-          <div className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-12 gap-4 items-start p-4">
+          <div className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-12 lg:h-[100px] gap-4 items-start ">
 
             {/* Location */}
             <div className="relative col-span-1 sm:col-span-2 lg:col-span-4 flex flex-col py-2 lg:py-6 lg:pl-2 lg:ml-4 lg:border-r">
@@ -425,7 +425,7 @@ const handleSearch = async () => {
             {/* Search button - full width on small screens, compact on large */}
             <button
             onClick={handleSearch}
-              className="col-span-1 sm:col-span-4 lg:col-span-2 h-full bg-[#ef6614] text-white rounded-md sm:rounded-b-md lg:rounded-r-md flex items-center justify-center text-lg font-bold sm:order-last lg:order-none py-3 "
+              className="col-span-1 sm:col-span-4 lg:col-span-2 lg:h-[100px] bg-[#ef6614] text-white rounded-md sm:rounded-b-md lg:rounded-r-md flex items-center justify-center text-lg font-bold sm:order-last lg:order-none py-3 "
             >
               SEARCH
             </button>
