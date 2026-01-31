@@ -100,10 +100,10 @@ const handleSearch = async () => {
           <div className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-12 lg:h-[100px] gap-4 items-start ">
 
             {/* Location */}
-            <div className="relative col-span-1 sm:col-span-2 lg:col-span-4 flex flex-col py-2 lg:py-6 lg:pl-2 lg:ml-4 lg:border-r">
+            <div className="relative col-span-1 sm:col-span-2 lg:col-span-4 flex flex-col py-2 lg:pl-2 lg:ml-4 lg:border-r">
               <div className="flex items-center gap-2">
                 <HiOutlineBuildingOffice2 className="text-2xl text-gray-500" />
-                <p className="text-sm md:text-base lg:text-sm text-gray-500 font-medium">
+                <p className="text-xs lg:text-[0.820rem] text-gray-500 font-medium">
                   Enter City Name, Location, or Specific hotel
                 </p>
               </div>
@@ -113,8 +113,8 @@ const handleSearch = async () => {
                   className="cursor-pointer flex flex-col mt-2"
                   onClick={() => setisEditing(true)}
                 >
-                  <span className="text-lg sm:text-xl lg:text-2xl font-bold">{location}</span>
-                  <span className="text-sm">{country}</span>
+                  <span className="text-md  sm:text-xl lg:text-2xl font-bold pl-4">{location}</span>
+                  <span className="text-sm pl-4 overflow-hidden">{country}</span>
                 </div>
               )}
 
@@ -181,7 +181,7 @@ const handleSearch = async () => {
             </div>
 
             {/* Check-in */}
-            <div className="relative col-span-1 sm:col-span-1 lg:col-span-2 lg:border-r py-2">
+            <div className="relative col-span-1 sm:col-span-1 lg:col-span-2 lg:border-r py-2 ">
               <div className="flex items-center gap-2 mb-2">
                 <LuCalendarRange className="text-gray-500" />
                 <p className="text-sm md:text-base lg:text-sm text-gray-500 font-medium">Check-In</p>
@@ -308,9 +308,15 @@ const handleSearch = async () => {
                 className="flex items-center gap-2 cursor-pointer"
                 onClick={() => setGuestOpen(!guestOpen)}
               >
-                <p className="text-sm ">
-                  {rooms.length} Room · {guests} Guests
+                
+                <div className="flex flex-row ">
+                  <p className="text-xs">  <sub className="font-bold  text-xl px-2"> {rooms.length}</sub>Room</p>
+                  
+                  <p className="text-xs">
+                    <sub className="font-bold text-xl px-2">{guests}</sub>
+                   Guests
                 </p>
+                </div>
                 <IoChevronDownOutline className="text-2xl font-light" />
               </div>
 
@@ -425,7 +431,7 @@ const handleSearch = async () => {
             {/* Search button - full width on small screens, compact on large */}
             <button
             onClick={handleSearch}
-              className="col-span-1 sm:col-span-4 lg:col-span-2 lg:h-[100px] bg-[#ef6614] text-white rounded-md sm:rounded-b-md lg:rounded-r-md flex items-center justify-center text-lg font-bold sm:order-last lg:order-none py-3 "
+              className="col-span-1 sm:col-span-4 lg:col-span-2 lg:h-[100px] bg-[#ef6614] text-white rounded-r-md sm:rounded-b-md lg:rounded-r-md flex items-center justify-center text-lg font-bold sm:order-last lg:order-none py-3 "
             >
               SEARCH
             </button>
