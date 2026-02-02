@@ -13,12 +13,14 @@ const Hotelcard = () => {
       ) : (
         <div>
           {hotels.map((hotel) => (
-            <div key={hotel._id} style={{ border: "1px solid #ccc", margin: "10px", padding: "10px" }}>
-              <h3>{hotel.name}</h3>
-              <p>{hotel.city}</p>
-              <p>₹{hotel.price}</p>
-            </div>
-          ))}
+          <div key={hotel._id} style={{ border: "1px solid #ccc", margin: "10px", padding: "10px" }}>
+            <h3>{hotel.name}</h3>
+            <p>{hotel.city}</p>
+            <p>
+              From ₹{hotel.rooms?.[0]?.price || "N/A"} / night
+            </p>
+          </div>
+        ))}
         </div>
       )}
     </div>

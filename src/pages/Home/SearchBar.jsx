@@ -79,7 +79,7 @@ const handleSearch = async () => {
         rooms: rooms.length,
       },              
     });
-
+ console.log("API RESPONSE:",res.data);
     navigate("/hotels", { state: { hotels: res.data } });
 
   } catch (err) {
