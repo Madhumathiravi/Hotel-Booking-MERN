@@ -9,11 +9,21 @@ import { useNavigate } from "react-router-dom";
 
 
 export default function Searchbar() {
-  const [location, setLocation] = useState("Bangalore");
-  const [country, setCountry] = useState("India");
+  // const [location, setLocation] = useState("Bangalore");
+  // const [country, setCountry] = useState("India");
   const [isEditing, setisEditing] = useState(false);
 
-  const [rooms, setRooms] = useState([{ adults: 1, children: 0 }]);
+  // const [rooms, setRooms] = useState([{ adults: 1, children: 0 }]);
+  const {
+  location,
+  country,
+  checkInDate,
+  checkOutDate,
+  rooms,
+} = searchState;
+
+
+
   const [guestOpen, setGuestOpen] = useState(false);
   const locations = [
     "New Delhi","Pune","Ahmedabad","Mumbai","Bangalore","Jaipur","Agra","Hyderabad",
@@ -54,8 +64,8 @@ export default function Searchbar() {
     return d;
   };
 
-  const [checkInDate, setcheckInDate] = useState(gettomorrow());
-  const [checkOutDate, setCheckOutDate] = useState(getDayAfterTomorrow());
+  // const [checkInDate, setcheckInDate] = useState(gettomorrow());
+  // const [checkOutDate, setCheckOutDate] = useState(getDayAfterTomorrow());
   const [calendarOpen, setCalendarOpen] = useState(null);
 
   const formatDay = (date) => date.toLocaleDateString("en-US", {weekday:"long"});
@@ -70,18 +80,20 @@ export default function Searchbar() {
 
 const handleSearch = async () => {
   try {
-    const res = await api.get("/hotels/search", {
-      params: {
-        city: location,
-        checkIn: checkInDate.toISOString(),
-        checkOut: checkOutDate.toISOString(),
-        guests,
-        rooms: rooms.length,
-      },              
-    });
- console.log("API RESPONSE:",res.data);
-    navigate("/hotels", { state: { hotels: res.data } });
-
+//     const res = await api.get("/hotels/search", {
+//       params: {
+//         city: location,
+//         checkIn: checkInDate.toISOString(),
+//         checkOut: checkOutDate.toISOString(),
+//         guests,
+//         rooms: rooms.length,
+//       },              
+//     });
+//  console.log("API RESPONSE:",res.data);
+//     navigate("/hotels", { state: { hotels: res.data } });
+    navigate(
+    `/hotels?city=${location}&checkIn=${checkInDate.toISOString()}&checkOut=${checkOutDate.toISOString()}&guests=${guests}&rooms=${rooms.length}`
+  );
   } catch (err) {
     console.error(err);
   }

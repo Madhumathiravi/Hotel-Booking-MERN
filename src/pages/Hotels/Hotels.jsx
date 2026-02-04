@@ -1,9 +1,9 @@
-import Searchbar from './Searchbar.jsx'
+import ModifySearchbar from './ModifySearchbar.jsx'
 import Hotelcard from './Hotelcard.jsx'
 export default function Hotels(){
     return(
        <>
-        <Searchbar/>
+        <ModifySearchbar/>
         <Hotelcard/>
        </>
     )
