@@ -9,11 +9,20 @@ import Mobile from "./Mobile.jsx"
 import Deals from "./Deals.jsx"
 import WhyBook from "./WhyBook.jsx";
 import Faq from "./Faq.jsx";
-export default function Home(){
+export default function Home(props){
     return(
       <div>
          <div >
-         <SearchBar />
+         <SearchBar
+           location={props.location}
+           setLocation={props.setLocation}
+           rooms={props.rooms}
+           setRooms={props.setRooms}
+           checkInDate={props.checkInDate}
+           setCheckInDate={props.setCheckInDate}
+           checkOutDate={props.checkOutDate}
+           setCheckOutDate={props.setCheckOutDate}
+         />
        </div>
 
        <div  className="py-10">

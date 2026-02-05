@@ -8,21 +8,19 @@ import api from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 
 
-export default function Searchbar() {
-  // const [location, setLocation] = useState("Bangalore");
-  // const [country, setCountry] = useState("India");
-  const [isEditing, setisEditing] = useState(false);
-
-  // const [rooms, setRooms] = useState([{ adults: 1, children: 0 }]);
-  const {
+export default function Searchbar({
   location,
-  country,
-  checkInDate,
-  checkOutDate,
+  setLocation,
   rooms,
-} = searchState;
-
-
+  setRooms,
+  checkInDate,
+  setCheckInDate,
+  checkOutDate,
+  setCheckOutDate,
+}) {
+ 
+  const [country, setCountry] = useState("India");
+  const [isEditing, setisEditing] = useState(false);
 
   const [guestOpen, setGuestOpen] = useState(false);
   const locations = [
@@ -64,10 +62,7 @@ export default function Searchbar() {
     return d;
   };
 
-  // const [checkInDate, setcheckInDate] = useState(gettomorrow());
-  // const [checkOutDate, setCheckOutDate] = useState(getDayAfterTomorrow());
   const [calendarOpen, setCalendarOpen] = useState(null);
-
   const formatDay = (date) => date.toLocaleDateString("en-US", {weekday:"long"});
   const formatMonthYear = (date) => date.toLocaleDateString("en-US", {month:"short", year:"numeric"});
   const formatDate = (date) => date.getDate();
@@ -159,7 +154,7 @@ const handleSearch = async () => {
                             key={loc}
                             className="border rounded-sm p-1 border-blue-400 text-blue-400 text-xs cursor-pointer"
                             onMouseDown={() => {
-                              setLocation(loc);
+                              setLocation(loc);//location
                               setCountry(countryByCity[loc]);
                               setisEditing(false);
                             }}
@@ -234,7 +229,7 @@ const handleSearch = async () => {
                         selected={checkInDate}
                         onSelect={(date) => {
                           if (!date) return;
-                          setcheckInDate(date);
+                          setCheckInDate(date);
 
                           if (checkOutDate <= date) {
                             const nextDay = new Date(date);
