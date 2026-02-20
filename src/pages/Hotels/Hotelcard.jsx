@@ -2,9 +2,7 @@
 
 import { useLocation } from "react-router-dom";
 
-const Hotelcard = () => {
-  const location = useLocation();
-  const hotels = location.state?.hotels || [];
+const Hotelcard =  ({ hotels }) => {
 
   return (
     <div>
