@@ -59,7 +59,7 @@ const getReviewInfo = (review) => {
   return { label: "Average", color: "bg-gray-400" };
 };
   return (
-   <div className="max-w-7xl m-auto flex flex-row justify-between">
+   <div className="max-w-7xl m-auto flex flex-row gap-8">
     <div>
       <div>
         map
@@ -146,9 +146,9 @@ const getReviewInfo = (review) => {
     </div>
     {/*Hotel card*/}
     <div>
-      <div className="flex flex-row justify-between item-center w-full">
-       
-         <div >476 Properties found in {city}</div>
+      <div className="flex flex-col justify-between item-center w-full">
+       <div className="flex justify-between ">
+        <div >476 Properties found in {city}</div>
          <div  className="relative">
           <div className="border border-1 p-2 rounded-lg shadow-md px-[10px] py-[8px] cursor-pointer flex flex-row item-center gap-2">
             <span 
@@ -161,7 +161,7 @@ const getReviewInfo = (review) => {
           />
           </div>
           {showdropdown && (
-            <div className="border border-1 p-2 rounded-lg shadow-md">
+            <div className="border border-1 p-2 rounded-lg shadow-md absolute bordered bg-white shadow-md">
            <ul className="text-sm">
             <li className="p-2">
                <input type="radio" name="sort" id="popularity"
@@ -197,21 +197,21 @@ const getReviewInfo = (review) => {
          </div>
           )}
        </div>
-      <div className="flex flex-col
-      ">
-       
-
+       </div>
+         
+      <div className="flex flex-col">
         {hotelsData.map((hotel, index) => {
-
-  
-  const reviewInfo = getReviewInfo(hotel.review);
+         const reviewInfo = getReviewInfo(hotel.review);
 
   return (
-    <div key={index}>
-      <img src={hotel.img} alt={hotel.name} className="w-35" />
+    <div key={index} className="flex flex-row">
+     <div>
+       <img src={hotel.img} alt={hotel.name} className="w-full h-48 rounded-l-xl" />
+     </div>
 
-      <div>
-        <h3>{hotel.name}</h3>
+    <div className="p-4">
+      <div >
+        <h3 className="text-lg font-semibold ">{hotel.name}</h3>
 
         {/* Stars */}
         <div className="flex">
@@ -238,7 +238,8 @@ const getReviewInfo = (review) => {
           <li key={i}>{item}</li>
         ))}
       </ul>
-
+    </div>
+    <div>
       {/* Review */}
       <div className="flex gap-2 items-center">
         <div>{hotel.review}</div>
@@ -255,6 +256,8 @@ const getReviewInfo = (review) => {
           <div>₹{(hotel.price - (hotel.price * hotel.discount) / 100) + hotel.tax}</div>
         </div>
         <button>View Rooms</button>
+    </div>
+      
         </div>
     );
   })}
