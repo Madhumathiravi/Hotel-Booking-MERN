@@ -1,53 +1,155 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
-
+import { MdOutlineStarPurple500 } from "react-icons/md";
+import image1 from "../../assets/spree-pune.png";
 
 const Hotelcard =  ({ hotels }) => {
     const [Result, setResult] = useState("Popularity");
     const [showdropdown, setshowdropdown] = useState(false)
+    const locationData = useLocation();
+    const hotelsData = [
+      {
+      img:image1,
+      name:"Zip by Spree Hotels",
+      location:"pune",
+      price:2000,
+      review:4.8,
+      nofReview:245,
+      star:4,
+      amenities:["Restaurant", "Free Wifi", "24-hour Room Service"],
+      discount:20,
+      tax:182,
+      extras:["couple friendly", "Local ID's accepted"]
+    },
+    {
+      img:image1,
+      name:"Zip by Spree Hotels",
+      location:"pune",
+      price:2000,
+      review:4.8,
+      nofReview:245,
+      star:3,
+      amenities:["Restaurant", "Free Wifi", "24-hour Room Service"],
+      discount:20,
+      tax:150,
+      extras:["couple friendly", "Local ID's accepted"]
+    },
+    {
+      img:image1,
+      name:"Zip by Spree Hotels",
+      location:"pune",
+      price:2000,
+      discount:20,
+      review:4.8,
+      nofReview:245,
+      star:4,
+      amenities:["Restaurant", "Free Wifi", "24-hour Room Service"],
+      tax:175,
+      extras:["kids friendly","Local ID's accepted"]
+    }
+    ]
+const params = new URLSearchParams(locationData.search);
+
+const city = params.get("city");
+const getReviewInfo = (review) => {
+  if (review >= 4.2) return { label: "Excellent", color: "bg-green-600" };
+  if (review >= 3.5) return { label: "Very Good", color: "bg-green-500" };
+  if (review >= 3) return { label: "Good", color: "bg-yellow-500" };
+  return { label: "Average", color: "bg-gray-400" };
+};
   return (
-    // <div className="max-w-6xl mx-auto px-4">
-    //   <h2>Available Hotels</h2>
+   <div className="max-w-7xl m-auto flex flex-row justify-between">
+    <div>
+      <div>
+        map
+      </div>
+      <div>
+        <input type="text" />
+      </div>
+      <div className="flex flex-row">
+        <span>Filters</span>
+        <span>Reset</span>
+      </div>
+      <div>
+        <span>Price</span>
+        <ul className="flex flex-col gap-2">
+            <li className="flex items-center gap-2">
+              <input type="checkbox" id="price-one" name="price" />
+              <label htmlFor="price-one">₹ 1 - ₹ 2,000</label>
+            </li>
 
-    //   {hotels.length === 0 ? (
-    //     <p>No hotels found</p>
-    //   ) : (
-    //     <div style={{ display: "grid", gap: "20px" }}>
-    //       {hotels.map((hotel) => (
-    //         <div
-    //           key={hotel._id}
-    //           style={{
-    //             border: "1px solid #ddd",
-    //             borderRadius: "10px",
-    //             overflow: "hidden",
-    //             maxWidth: "500px",
-    //           }}
-    //         >
-    //           {/* ✅ HOTEL IMAGE */}
-    //           <img
-    //             src={hotel.images?.[0]}
-    //             alt={hotel.name}
-    //             style={{ width: "100%", height: "294px", objectFit: "cover" }}
-    //           />
+            <li className="flex items-center gap-2">
+              <input type="checkbox" id="price-two" name="price" />
+              <label htmlFor="price-two">₹ 2,001 - ₹ 4,000</label>
+            </li>
 
-    //           <div style={{ padding: "12px" }}>
-    //             <h3>{hotel.name}</h3>
-    //             <p>{hotel.city}</p>
-    //             <p>⭐ {hotel.rating}</p>
-    //             <p>
-    //               From <b>₹{hotel.rooms?.[0]?.basePrice}</b> / night
-    //             </p>
-    //           </div>
-    //         </div>
-    //       ))}
-    //     </div>
-    //   )}
-    // </div>
-    <div className="max-w-7xl mx-auto px-4 font-poppins">
-       <div className="flex justify-between mt-4">
-         <h1>Available Hotels</h1>
-         <div>
+            <li className="flex items-center gap-2">
+              <input type="checkbox" id="price-three" name="price" />
+              <label htmlFor="price-three">₹ 4,001 - ₹ 8,000</label>
+            </li>
+
+            <li className="flex items-center gap-2">
+              <input type="checkbox" id="price-four" name="price" />
+              <label htmlFor="price-four">₹ 8,001 - ₹ 20,000</label>
+            </li>
+
+            <li className="flex items-center gap-2">
+              <input type="checkbox" id="price-five" name="price" />
+              <label htmlFor="price-five">₹ 20,001 - ₹ 30,000</label>
+            </li>
+
+            <li className="flex items-center gap-2">
+              <input type="checkbox" id="price-six" name="price" />
+              <label htmlFor="price-six">Above ₹ 30,000</label>
+            </li>
+          </ul>
+      </div>
+      <div>
+        <span>Star Rating</span>
+        <ul>
+          <li className="flex items-center gap-2">
+              <input type="checkbox" id="five-star" name="rating" />
+              <label htmlFor="five-star">5 Star</label>
+            </li>
+
+            <li className="flex items-center gap-2">
+              <input type="checkbox" id="four-star" name="rating" />
+              <label htmlFor="four-star">4 Star</label>
+            </li>
+
+            <li className="flex items-center gap-2">
+              <input type="checkbox" id="three-star" name="rating" />
+              <label htmlFor="three-star">3 Star</label>
+            </li>
+        </ul>
+      </div>
+       <div>
+        <span>User Rating</span>
+        <ul>
+          <li className="flex items-center gap-2">
+              <input type="checkbox" id="excellent" name="user-rating" />
+              <label htmlFor="excellent">Excellent(4.2+)</label>
+            </li>
+
+            <li className="flex items-center gap-2">
+              <input type="checkbox" id="very-good" name="user-rating" />
+              <label htmlFor="very-good">Very Good(3.5+)</label>
+            </li>
+
+            <li className="flex items-center gap-2">
+              <input type="checkbox" id="good" name="user-rating" />
+              <label htmlFor="good">Good(3+)</label>
+            </li>
+        </ul>
+      </div>
+    </div>
+    {/*Hotel card*/}
+    <div>
+      <div className="flex flex-row justify-between item-center w-full">
+       
+         <div >476 Properties found in {city}</div>
+         <div  className="relative">
           <div className="border border-1 p-2 rounded-lg shadow-md px-[10px] py-[8px] cursor-pointer flex flex-row item-center gap-2">
             <span 
           onClick={() => setshowdropdown(!showdropdown)}
@@ -94,12 +196,73 @@ const Hotelcard =  ({ hotels }) => {
           </ul>
          </div>
           )}
-         </div>
        </div>
-       <div>
+      <div className="flex flex-col
+      ">
+       
+
+        {hotelsData.map((hotel, index) => {
+
+  
+  const reviewInfo = getReviewInfo(hotel.review);
+
+  return (
+    <div key={index}>
+      <img src={hotel.img} alt={hotel.name} className="w-35" />
+
+      <div>
+        <h3>{hotel.name}</h3>
+
+        {/* Stars */}
+        <div className="flex">
+          {[...Array(5)].map((_, i) =>
+            i < hotel.star ? (
+              <MdOutlineStarPurple500 key={i} className="text-blue-500" />
+            ) : (
+              <MdOutlineStarPurple500 key={i} className="text-gray-300" />
+            )
+          )}
+        </div>
+      </div>
+
+      <div>{hotel.location}</div>
+      <div className="flex gap-2">
+  {hotel.extras.map((extra, index) => (
+    <span key={index}>{extra}</span>
+  ))}
+</div>
+
+      {/* Amenities */}
+      <ul>
+        {hotel.amenities.map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ul>
+
+      {/* Review */}
+      <div className="flex gap-2 items-center">
+        <div>{hotel.review}</div>
+
+        <div >
+          {reviewInfo.label}
+        </div>
+        <div>{hotel.nofReview} reviews</div>
+      </div>
+        <div>
+          <div>{hotel.discount}%</div>
+          <div className="line-through text-red-500">₹{hotel.price}</div>
+          <div> +{hotel.tax} taxes & fees/night </div>
+          <div>₹{(hotel.price - (hotel.price * hotel.discount) / 100) + hotel.tax}</div>
+        </div>
+        <button>View Rooms</button>
+        </div>
+    );
+  })}
         
-       </div>
+        </div>
+      </div>
     </div>
+   </div>
   );
 };
 
