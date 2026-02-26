@@ -114,3 +114,46 @@ const city = params.get("city");
 };
 
 export default Hotelcard;
+
+ const locationData = useLocation();
+    const hotelsData = [
+      {
+      img:image1,
+      name:"Zip by Spree Hotels",
+      location:"pune",
+      price:2000,
+      review:4.8,
+      nofReview:245,
+      star:4,
+      amenities:["Restaurant", "Free Wifi", "24-hour Room Service"],
+      discount:20,
+      tax:182,
+      extras:["couple friendly", "Local ID's accepted"]
+    },
+    {
+      img:image1,
+      name:"Zip by Spree Hotels",
+      location:"pune",
+      price:2000,
+      review:4.8,
+      nofReview:245,
+      star:3,
+      amenities:["Restaurant", "Free Wifi", "24-hour Room Service"],
+      discount:20,
+      tax:150,
+      extras:["couple friendly", "Local ID's accepted"]
+    },
+    {
+      img:image1,
+      name:"Zip by Spree Hotels",
+      location:"pune",
+      price:2000,
+      discount:20,
+      review:4.8,
+      nofReview:245,
+      star:4,
+      amenities:["Restaurant", "Free Wifi", "24-hour Room Service"],
+      tax:175,
+      extras:["kids friendly","Local ID's accepted"]
+    }
+    ]

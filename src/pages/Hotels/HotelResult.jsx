@@ -3,55 +3,19 @@ import { useLocation } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
 import { MdOutlineStarPurple500 } from "react-icons/md";
 import image1 from "../../assets/spree-pune.png";
-function HotelResult(){
+function HotelResult({hotels = []}){
     
     const [Result, setResult] = useState("Popularity");
     const [showdropdown, setshowdropdown] = useState(false)
-    const locationData = useLocation();
-    const hotelsData = [
-      {
-      img:image1,
-      name:"Zip by Spree Hotels",
-      location:"pune",
-      price:2000,
-      review:4.8,
-      nofReview:245,
-      star:4,
-      amenities:["Restaurant", "Free Wifi", "24-hour Room Service"],
-      discount:20,
-      tax:182,
-      extras:["couple friendly", "Local ID's accepted"]
-    },
-    {
-      img:image1,
-      name:"Zip by Spree Hotels",
-      location:"pune",
-      price:2000,
-      review:4.8,
-      nofReview:245,
-      star:3,
-      amenities:["Restaurant", "Free Wifi", "24-hour Room Service"],
-      discount:20,
-      tax:150,
-      extras:["couple friendly", "Local ID's accepted"]
-    },
-    {
-      img:image1,
-      name:"Zip by Spree Hotels",
-      location:"pune",
-      price:2000,
-      discount:20,
-      review:4.8,
-      nofReview:245,
-      star:4,
-      amenities:["Restaurant", "Free Wifi", "24-hour Room Service"],
-      tax:175,
-      extras:["kids friendly","Local ID's accepted"]
-    }
-    ]
-const params = new URLSearchParams(locationData.search);
+       const locationData = useLocation();
 
-const city = params.get("city");
+  const params = new URLSearchParams(locationData.search);
+
+  const city = params.get("city");
+    
+// const params = new URLSearchParams(locationData.search);
+
+
 const getReviewInfo = (review) => {
   if (review >= 4.2) return { label: "Excellent", color: "bg-green-600" };
   if (review >= 3.5) return { label: "Very Good", color: "bg-green-500" };
@@ -115,14 +79,14 @@ const getReviewInfo = (review) => {
        </div>
          
       <div className="flex flex-col">
-        {hotelsData.map((hotel, index) => {
+        {hotels.map((hotel, index) => {
          const reviewInfo = getReviewInfo(hotel.review);
 
   return (
     <div key={index} className="flex items-stretch m-4 border border-gray-300 rounded-xl w-full">
      <div className="w-64 flex-shrink-0">
   <img
-    src={hotel.img}
+    src={hotel.imgage1}
     alt={hotel.name}
     className="w-full h-full object-cover rounded-l-xl"
   />

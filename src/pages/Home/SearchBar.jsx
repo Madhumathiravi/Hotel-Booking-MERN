@@ -75,17 +75,6 @@ export default function Searchbar({
 
 const handleSearch = async () => {
   try {
-//     const res = await api.get("/hotels/search", {
-//       params: {
-//         city: location,
-//         checkIn: checkInDate.toISOString(),
-//         checkOut: checkOutDate.toISOString(),
-//         guests,
-//         rooms: rooms.length,
-//       },              
-//     });
-//  console.log("API RESPONSE:",res.data);
-//     navigate("/hotels", { state: { hotels: res.data } });
     navigate(
     `/hotels?city=${location}&checkIn=${checkInDate.toISOString()}&checkOut=${checkOutDate.toISOString()}&guests=${guests}&rooms=${rooms.length}`
   );
