@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
 import { MdOutlineStarPurple500 } from "react-icons/md";
-import image1 from "../../assets/spree-pune.png";
+// import image1 from "../../assets/spree-pune.png";
 function HotelResult({hotels = []}){
     
     const [Result, setResult] = useState("Popularity");
@@ -80,32 +80,41 @@ const getReviewInfo = (review) => {
          
       <div className="flex flex-col">
         {hotels.map((hotel, index) => {
+           console.log("HOTEL OBJECT:", hotel);
          const reviewInfo = getReviewInfo(hotel.review);
+        
 
   return (
     <div key={index} className="flex items-stretch m-4 border border-gray-300 rounded-xl w-full">
      <div className="w-64 flex-shrink-0">
-  <img
+  {/* <img
     src={hotel.imgage1}
     alt={hotel.name}
     className="w-full h-full object-cover rounded-l-xl"
-  />
+  /> */}
+  {/* <img src={hotel.images?.[0]} alt={hotel.name} /> */}
+  <img
+  src={`http://localhost:5000${hotel.images?.[0]}`}
+  alt={hotel.name}
+  className="w-full h-full object-cover rounded-l-xl"
+/>
+
 </div>
 
     <div className="p-2">
       <div >
         <h3 className="text-lg font-bold ">{hotel.name}</h3>
 
-        {/* Stars */}
+
         <div className="flex">
-          {[...Array(5)].map((_, i) =>
-            i < hotel.star ? (
-              <MdOutlineStarPurple500 key={i} className="text-blue-500" />
-            ) : (
-              <MdOutlineStarPurple500 key={i} className="text-gray-300" />
-            )
-          )}
-        </div>
+  {[...Array(5)].map((_, i) =>
+    i < Math.floor(hotel.rating) ? (
+      <MdOutlineStarPurple500 key={i} className="text-blue-500" />
+    ) : (
+      <MdOutlineStarPurple500 key={i} className="text-gray-300" />
+    )
+  )}
+</div>
       </div>
 
       <div className="text-blue-500 text-sm">{hotel.location}</div>
